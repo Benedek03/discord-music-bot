@@ -1,0 +1,13 @@
+{
+  "name": "bubuka2",
+  "description": "",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Benedek03/bubuka2.git"
+  },
+  "author": "Benedek03",
+  "bugs": { "url": "https://github.com/Benedek03/bubuka2/issues" },
+  "homepage": "https://github.com/Benedek03/bubuka2#readme",
+  "dependencies": { "discord.js": "^13.1.0" }
+}
