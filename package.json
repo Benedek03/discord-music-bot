@@ -7,7 +7,12 @@
     "url": "git+https://github.com/Benedek03/bubuka2.git"
   },
   "author": "Benedek03",
-  "bugs": { "url": "https://github.com/Benedek03/bubuka2/issues" },
+  "bugs": {
+    "url": "https://github.com/Benedek03/bubuka2/issues"
+  },
   "homepage": "https://github.com/Benedek03/bubuka2#readme",
-  "dependencies": { "discord.js": "^13.1.0" }
+  "dependencies": {
+    "discord.js": "^13.1.0",
+    "wokcommands": "^1.3.9303"
+  }
 }
