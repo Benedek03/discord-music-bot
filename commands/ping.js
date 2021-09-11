@@ -1,12 +1,11 @@
-module.exports = {
-    //name: 'ping',
-    description: 'Replies with "Pong!"',
-    testOnly: true,
-    slash: true,
+const { SlashCommandBuilder } = require('@discordjs/builders')
 
-    callback: ({ interaction }) => {
-        interaction.reply({
-            content: 'pong'
-        })
+module.exports = {
+    data : new SlashCommandBuilder()
+        .setName('ping')
+        .setDescription('replies with pong')
+        .toJSON(),
+    async execute(interaction) {
+        interaction.reply('pong');
     }
 }

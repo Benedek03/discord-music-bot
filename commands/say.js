@@ -1,16 +1,15 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
-    //name: 'say',
-    description: 'make bubuka say something!',
-    testOnly: true,
-    slash: true,
-
-    minArgs: 1,
-    maxArgs: 1,
-    expectedArgs: '<str>',
-
-    callback: ({ interaction, args }) => {
-        interaction.reply({
-            content: args[0]
-        })
+    data : new SlashCommandBuilder()
+        .setName('say')
+        .setDescription('make bubuka say something')
+        .addStringOption(option => 
+            option.setName('str')
+            .setDescription('string that bubuka will say')
+            .setRequired(true)
+        ).toJSON(),
+    async execute(interaction) {
+        interaction.reply(interaction.options.getString('str'));
     }
 }
