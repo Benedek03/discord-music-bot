@@ -1,20 +1,21 @@
 const {Client, Intents, Collection} = require('discord.js');
 const { token, commandDir } = require('./config.json');
-const fs = require('fs');
+const { getFilesFromDir } = require('./utils/utils.js');
 
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MESSAGES,
-        Intents.FLAGS.GUILD_MESSAGE_REACTIONS
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+		Intents.FLAGS.GUILD_VOICE_STATES,
     ]
 });
 
 client.commands = new Collection();
+let commandFilesNames = getFilesFromDir('./commands', ['.js']);
 
-let commandFilesNames = fs.readdirSync(commandDir).filter(f => f.endsWith('.js'));
 for (const file of commandFilesNames) {
-    const command = require(commandDir + file);
+    const command = require(file);
     client.commands.set(command.data.name, command)
 }
 
