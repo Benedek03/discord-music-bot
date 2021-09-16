@@ -8,6 +8,6 @@ module.exports = {
         .toJSON(),
     async execute(interaction) {
         skip(interaction.member.voice.channel);
-        interaction.reply('skiping');
+        interaction.reply('skiping one song');
     }
 }

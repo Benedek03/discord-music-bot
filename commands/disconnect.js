@@ -8,6 +8,6 @@ module.exports = {
         .toJSON(),
     async execute(interaction) {
         leave(interaction.member.voice.channel);
-        interaction.reply('disconnected');
+        interaction.reply('disconnected from voice channel');
     }
 }
