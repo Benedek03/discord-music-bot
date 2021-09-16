@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { leaveChannel } = require('../utils/voiceHandler.js');
+const { leave } = require('../utils/voice.js');
 
 module.exports = {
     data : new SlashCommandBuilder()
@@ -7,7 +7,7 @@ module.exports = {
         .setDescription('bubuka will leave your voice channel')
         .toJSON(),
     async execute(interaction) {
-        leaveChannel(interaction.member.voice.channel);
+        leave(interaction.member.voice.channel);
         interaction.reply('disconnected');
     }
 }

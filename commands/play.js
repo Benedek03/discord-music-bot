@@ -1,7 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { addToQueue } = require('../utils/voiceHandler.js');
-//https://www.youtube.com/watch?v= code
-
+const { add } = require('../utils/voice.js');
 
 module.exports = {
     data : new SlashCommandBuilder()
@@ -13,11 +11,13 @@ module.exports = {
             .setRequired(true)
         ).toJSON(),
     async execute(interaction) {
+
         let link = interaction.options.getString('link');
         if(link.includes('&')){
             link = link.split('&')[0];
         }
+
         interaction.reply(link);
-        addToQueue(link, interaction.member.voice.channel);
+        add(interaction.member.voice.channel, link);
     }
 }

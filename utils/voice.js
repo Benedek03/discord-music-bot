@@ -1,11 +1,14 @@
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
 const ytdl = require('ytdl-core');
+const mongo = require('mongoose');
 
 let queues = Object();
 
 class Queue {
     constructor(channel, link) {
         this.guildID = channel.guild.id;
+        this.loopQueue = false;
+        this.nextSongIndex = 0;
         this.songs = [link];
         this.connection = joinVoiceChannel({
             selfDeaf: false,
@@ -28,10 +31,16 @@ class Queue {
     }
 
     playNextSong() {
-        if (this.songs.length == 0) {
-            this.leave();
+        if (this.nextSongIndex == this.songs.length) {
+            if (!this.loopQueue) {
+                this.leave();
+            } else { 
+                this.nextSongIndex = 0;
+                this.playNextSong();
+            }
         } else {
-            this.player.play(createAudioResource(ytdl(this.songs.shift(), { filter: 'audioonly'})));
+            this.player.play(createAudioResource(ytdl(this.songs[this.nextSongIndex], { filter: 'audioonly'})));
+            this.nextSongIndex += 1;
         }
     }
 
@@ -42,14 +51,14 @@ class Queue {
 }
 
 
-function leaveChannel(channel) {
+function leave(channel) {
     let guildID = channel.guild.id;
     if (queues[guildID]) {
         queues[guildID].leave()
     }
 }
 
-function addToQueue(link, channel) {
+function add(channel, link) {
     let guildID = channel.guild.id;
     if (!queues[guildID]) {
         queues[guildID] = new Queue(channel, link);
@@ -58,7 +67,42 @@ function addToQueue(link, channel) {
     }
 }
 
+function skip(channel) {
+    let guildID = channel.guild.id;
+    if (queues[guildID]) {
+        queues[guildID].playNextSong()
+    }
+}
+
+function queue(channel) {
+    let guildID = channel.guild.id;
+    if (queues[guildID]) {
+        result = queues[guildID].songs;
+        result.push(queues[guildID].loopQueue);
+        result.push(queues[guildID].nextSongIndex - 1);
+        return result;
+    }
+}
+
+function toggleLoopQueue(channel) {
+    let guildID = channel.guild.id;
+    if (queues[guildID]) {
+        queues[guildID].loopQueue = !queues[guildID].loopQueue 
+    }
+}
+
+function remove(channel, index) {
+    let guildID = channel.guild.id;
+    if (queues[guildID]) {
+        return queues[guildID].songs.splice(index, 1);
+    }
+}
+
 module.exports = {
-    leaveChannel,
-    addToQueue,
+    add,
+    remove,
+    skip,
+    leave,
+    queue,
+    toggleLoopQueue,
 }
