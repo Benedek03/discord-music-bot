@@ -11,7 +11,6 @@ module.exports = {
             .setRequired(true)
         ).toJSON(),
     async execute(interaction) {
-        let removed = remove(interaction.member.voice.channel, interaction.options.getInteger('index'));
-        interaction.reply(`removed ${removed} frome the queue`);
+        remove(interaction, interaction.options.getInteger('index'));
     }
 }

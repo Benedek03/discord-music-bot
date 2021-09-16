@@ -7,7 +7,6 @@ module.exports = {
         .setDescription('bubuka will skip to the next song')
         .toJSON(),
     async execute(interaction) {
-        skip(interaction.member.voice.channel);
-        interaction.reply('skiping one song');
+        skip(interaction);
     }
 }

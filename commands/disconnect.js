@@ -3,11 +3,10 @@ const { leave } = require('../utils/voice.js');
 
 module.exports = {
     data : new SlashCommandBuilder()
-        .setName('disconnet')
+        .setName('disconnect')
         .setDescription('bubuka will leave your voice channel')
         .toJSON(),
     async execute(interaction) {
-        leave(interaction.member.voice.channel);
-        interaction.reply('disconnected from voice channel');
+        leave(interaction);
     }
 }

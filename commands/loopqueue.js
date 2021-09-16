@@ -7,7 +7,6 @@ module.exports = {
         .setDescription('bubuka will toggle if the queue loops')
         .toJSON(),
     async execute(interaction) {
-        toggleLoopQueue(interaction.member.voice.channel);
-        interaction.reply('loopqueue toggled');
+        toggleLoopQueue(interaction);
     }
 }

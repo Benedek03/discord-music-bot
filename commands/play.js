@@ -17,7 +17,6 @@ module.exports = {
             link = link.split('&')[0];
         }
 
-        interaction.reply(`added ${link} to queue`);
-        add(interaction.member.voice.channel, link);
+        add(interaction, link);
     }
 }
