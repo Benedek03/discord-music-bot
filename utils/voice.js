@@ -94,6 +94,11 @@ class Queue {
     }
 }
 
+//#region playlist
+
+//#endregion
+
+//#region commands
 function validate(interaction){
     if(!queues[interaction.guildId]){
         interaction.reply('i am not in a voice channel');
@@ -142,7 +147,7 @@ function add(interaction, link) {
         interaction.reply('you are not in a voice channel');
         return;
     }
-    if(queues[interaction.guildId] && interaction.member.voice.channel.id != queues[interaction.guildId].connection.channelId){
+    if(queues[interaction.guildId] && interaction.member.voice.channel.id != queues[interaction.guildId].channelID) {
         interaction.reply('you are in a different voice channel');
         return;
     }
@@ -179,8 +184,11 @@ function queue(interaction) {
             });
         }
         interaction.reply({embeds: [embed]});
+    } else {
+        interaction.reply('there is no queue')
     }
 }
+//#endregion
 
 module.exports = {
     add,
