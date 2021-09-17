@@ -1,11 +1,7 @@
 const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus, demuxProbe } = require('@discordjs/voice');
 const youtubedl = require('youtube-dl-exec');
 const mongo = require('mongoose');
-var getYoutubeTitle = require('get-youtube-title');
-
-
-let queues = Object();
-
+const getYoutubeTitle = require('get-youtube-title');
 function ytdl(link) {
     return new Promise((resolve, reject) => {
         const process = youtubedl.raw(
@@ -37,14 +33,20 @@ function ytdl(link) {
     });
 }
 
+let queues = Object();
+
 class Queue {
     constructor(channel, link) {
         this.guildID = channel.guild.id;
         this.channelID = channel.id;
+
         this.loopQueue = false;
-        this.nextSongIndex = 0;
-        this.songs = [link];
-        this.songTitles = []
+        this.loopSong = false;
+
+        this.songs = [];
+        this.addSong(this.songs, link);
+        this.nowPlaying;
+
         this.connection = joinVoiceChannel({
             selfDeaf: false,
             selfMute: false,
@@ -56,36 +58,42 @@ class Queue {
         this.player.on('error', error => {
             console.error(error);
         });
-        this.sub = this.connection.subscribe(this.player);
+
+        this.connection.subscribe(this.player); 
         this.playNextSong();
         this.player.on(AudioPlayerStatus.Idle, () => { this.playNextSong() })
-        this.addTitle(this.songTitles, link);
     }
 
-    addSong(link) {
-        this.songs.push(link);
-        this.addTitle(this.songTitles, link);
-    }
-
-    addTitle(arr, link){
-        getYoutubeTitle(link.replace('https://www.youtube.com/watch?v=', ''), function (err, title) {
-            arr.push(title);
-        });
-    }
-
-    async playNextSong() {
-        if (this.nextSongIndex == this.songs.length) {
-            if (!this.loopQueue) {
-                this.leave();
-            } else { 
-                this.nextSongIndex = 0;
-                this.playNextSong();
-            }
-        } else {
-            let stream = await ytdl(this.songs[this.nextSongIndex]);
-            this.player.play(stream);
-            this.nextSongIndex += 1;
+    playNextSong() {
+        if (this.loopSong){
+            this.play();
+            return;
         }
+        if (this.songs.length == 0) {
+            this.leave();
+            return;
+        }
+        if (this.loopQueue){
+            this.songs.push(this.nowPlaying);
+            this.nowPlaying = this.songs.shift();
+            this.play();
+            return;
+        }
+        this.nowPlaying = this.songs.shift();
+        this.play();
+    }
+
+    async play(){
+        let stream = await ytdl(this.nowPlaying.link);
+        this.player.play(stream);
+    }
+
+    addSong(arr, link){
+        arr.push({link: link});
+        let s = arr[arr.length - 1];
+        getYoutubeTitle(link.replace('https://www.youtube.com/watch?v=', ''), function (err, title) {
+            s.title = title;
+        });
     }
 
     leave() {
@@ -99,21 +107,6 @@ class Queue {
 //#endregion
 
 //#region commands
-function validate(interaction){
-    if(!queues[interaction.guildId]){
-        interaction.reply('i am not in a voice channel');
-        return false;
-    }
-    if(!interaction.member.voice.channel){
-        interaction.reply('you are not in a voice channel');
-        return false;
-    }
-    if(interaction.member.voice.channel.id != queues[interaction.guildId].channelID){
-        interaction.reply('you are in a different voice channel');
-        return false;
-    }
-    return true;
-}
 
 function leave(interaction) {
     if (validate(interaction)) {
@@ -124,8 +117,15 @@ function leave(interaction) {
 
 function toggleLoopQueue(interaction) {
     if (validate(interaction)) {
-        queues[interaction.guildId].loopQueue = !queues[interaction.guildId].loopQueue
+        queues[interaction.guildId].loopQueue = !queues[interaction.guildId].loopQueue;
         interaction.reply('loopqueue toggled');
+    }
+}
+
+function toggleLoopSong(interaction) {
+    if (validate(interaction)) {
+        queues[interaction.guildId].loopSong = !queues[interaction.guildId].loopSong;
+        interaction.reply('loopsong toggled');
     }
 }
 
@@ -154,39 +154,59 @@ function add(interaction, link) {
     if(!queues[interaction.guildId]){
         queues[interaction.guildId] = new Queue(interaction.member.voice.channel, link);
     } else {
-        queues[interaction.guildId].addSong(link);
+        queues[interaction.guildId].addSong(queues[interaction.guildId].songs, link);
     }
     interaction.reply(`added ${link} to queue`);
 }
 
 function queue(interaction) {
     if (queues[interaction.guildId]) {
-        sl = queues[interaction.guildId].songs;
-        st = queues[interaction.guildId].songTitles;
-
+        s = queues[interaction.guildId].songs;
+        n = queues[interaction.guildId].nowPlaying;
+        
         let embed = {
             color: 0xff0000,
             title: 'queue',
-            fields: [],
+            fields: [{
+                name: 'now playing',
+                value: `[${n.title}](${n.link})`
+            }],
             footer: {
-                text: `loopqueue: ${queues[interaction.guildId].loopQueue}`
+                text: `loopqueue: ${queues[interaction.guildId].loopQueue} loopsong: ${queues[interaction.guildId].loopSong}`
             }
         }
 
-        for (let i = 0; i < sl.length; i++) {
-            let name = `${i}. song`;
-            if (i == queues[interaction.guildId].nextSongIndex - 1 ) { name += ' now playing'; }
-            let value = `[${st[i]}](${sl[i]})`
-
+        
+        for (let i = 0; i < s.length; i++) {
+            let name = `${i}. song in queue`;
+            let value = `[${s[i].title}](${s[i].link})`
+            
             embed.fields.push({
                 name,
                 value
             });
         }
+
         interaction.reply({embeds: [embed]});
     } else {
         interaction.reply('there is no queue')
     }
+}
+
+function validate(interaction){
+    if(!queues[interaction.guildId]){
+        interaction.reply('i am not in a voice channel');
+        return false;
+    }
+    if(!interaction.member.voice.channel){
+        interaction.reply('you are not in a voice channel');
+        return false;
+    }
+    if(interaction.member.voice.channel.id != queues[interaction.guildId].channelID){
+        interaction.reply('you are in a different voice channel');
+        return false;
+    }
+    return true;
 }
 //#endregion
 
@@ -197,4 +217,5 @@ module.exports = {
     leave,
     queue,
     toggleLoopQueue,
+    toggleLoopSong,
 }
