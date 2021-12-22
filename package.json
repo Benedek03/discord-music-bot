@@ -1,16 +1,15 @@
 {
-  "name": "a",
-  "version": "1.0.0",
-  "description": "",
+  "name": "bubuka-music",
+  "version": "3.0.0",
+  "description": "Bubuka is a discord bot written in typescript.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Benedek",
+  "license": "MIT",
   "dependencies": {
     "@discordjs/builders": "^0.9.0",
     "@discordjs/rest": "^0.1.0-canary.0",
