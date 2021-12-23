@@ -33,7 +33,7 @@ export default {
             interaction.reply('arg have to be at least 1');
             return;
         }
-        if (index > q.songs.length) {
+        if (index > q.songs.length-1) {
             interaction.reply("arg can't be bigger than the length of the queue");
             return;
         }

@@ -35,10 +35,15 @@ export default {
             interaction.reply('arg have to be at least 1');
             return;
         }
+        if (int > q.songs.length - 1) {
+            interaction.reply("arg can't be bigger than the length of the queue");
+            return;
+        }
         for (let i = 0; i < int; i++) {
             q.shift();
         }
-        q.play();
+        if (queueMap.has(interaction.guildId))
+            q.play();
         interaction.reply(`skipped ${int} songs`);
     }
 } as Command;
