@@ -6,6 +6,11 @@ if (!process.env.DISCORD_TOKEN) {
     console.error('no process.env.DISCORD_TOKEN in .env');
     process.exit();
 }
+if (!process.env.TESTGUILDID) {
+    console.error('no process.env.DISCORD_TOKEN in .env');
+    process.exit();
+}
+const testGuildId = process.env.TESTGUILDID;
 
 const client = new Client({
     intents: [
@@ -34,39 +39,8 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     }
 })
 
-client.on('ready', () => {
+client.on('ready', async () => {
+    await deployInGuild(testGuildId, commandDataArray);
     console.log('ready');
 });
 client.login(process.env.DISCORD_TOKEN);
-
-
-
-// import { createAudioPlayer, createAudioResource, joinVoiceChannel, VoiceConnection } from '@discordjs/voice';
-// import ytdl from "ytdl-core";
-
-// client.on('messageCreate', msg => {
-    //     if (!msg.guild || !msg.guildId) return;
-    //     if (msg.content != 'ping') return;
-
-//     msg.reply('pong');
-//     try {
-//         let player = createAudioPlayer();
-//         let connection = joinVoiceChannel({
-//             selfDeaf: false,
-//             selfMute: false,
-//             guildId: msg.guildId,
-//             channelId: msg.member?.voice.channelId as string,
-//             adapterCreator: msg.guild.voiceAdapterCreator
-//         });
-//         (async () => {
-//             // let r = await ytdl('https://www.youtube.com/watch?v=-qWxHEUukEc&ab_channel=MusicLibrary-1Hour',{highWaterMark:1<<25});
-//             let r = await ytdl('https://www.youtube.com/watch?v=-qWxHEUukEc&ab_channel=MusicLibrary-1Hour',{highWaterMark:1<<25});
-//             let res = createAudioResource(r);
-//             connection.subscribe(player);
-//             player.play(res);
-//         })();
-
-//     } catch (err) {
-//         console.error(err);
-//     }
-// });
