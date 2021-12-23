@@ -18,8 +18,7 @@ export default {
         let embed = new MessageEmbed()
             .setColor(0xff0000)
             .setTitle('Current queue:')
-            .setFooter(`loopsong: ${q.loopSong} \
-                        loopqueue: ${q.loopQueue}`)
+            .setFooter(`loopsong: ${q.loopSong}     loopqueue: ${q.loopQueue}`)
             .addField('Now playing:', `[${q.songs[0].title}](${q.songs[0].url})`);
         for (let i = 1; i < q.songs.length; i++) {
             embed.addField(`${i}. in queue:`, `[${q.songs[i].title}](${q.songs[i].url})`);

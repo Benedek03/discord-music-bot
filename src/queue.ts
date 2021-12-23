@@ -17,8 +17,8 @@ export async function createQueue(channel: VoiceChannel | StageChannel, url: str
 }
 
 export class Queue {
-    public guildID: string;
-    public channelID: string;
+    public guildId: string;
+    public channelId: string;
     public loopQueue = false;
     public loopSong = false;
     public songs: Song[] = [];
@@ -26,8 +26,8 @@ export class Queue {
     public player: AudioPlayer;
 
     constructor(channel: VoiceChannel | StageChannel) {
-        this.guildID = channel.guildId;
-        this.channelID = channel.id;
+        this.guildId = channel.guildId;
+        this.channelId = channel.id;
         this.loopQueue = false;
         this.loopSong = false;
         this.songs = [];
@@ -76,6 +76,6 @@ export class Queue {
 
     leave() {
         this.connection.destroy();
-        queueMap.delete(this.guildID);
+        queueMap.delete(this.guildId);
     }
 }

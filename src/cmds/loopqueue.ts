@@ -1,17 +1,13 @@
 import { Command } from '../commad';
 import { CommandInteraction, GuildMember } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { createQueue, queueMap } from '../queue';
+import { Queue, queueMap } from '../queue';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('play')
-        .setDescription('dasfadfgsdfhagashgfdsb')
-        .addStringOption(o =>
-            o.setName('str')
-                .setDescription('asdfg')
-                .setRequired(true)
-        ).toJSON(),
+        .setName('loopqueue')
+        .setDescription('asdgfgfdashgdsfhsdf')
+        .toJSON(),
     async execute(interaction: CommandInteraction) {
         if (!(interaction.member instanceof GuildMember)) return;
         if (!interaction.member.voice.channel) {
@@ -23,13 +19,13 @@ export default {
             return;
         }
         
-        let url = interaction.options.getString('str') as string;
-        //TODO url validation
-        if (queueMap.has(interaction.guildId)) {
-            queueMap.get(interaction.guildId)?.addSong(url);
-        } else {
-            createQueue(interaction.member.voice.channel, url)
+        if (!queueMap.has(interaction.guildId)) {
+            interaction.reply('there is no queue in this guild');
+            return;
         }
-        interaction.reply(`added ${url} to queue`)
+        let q = queueMap.get(interaction.guildId) as Queue;
+        
+        q.loopQueue = !q.loopQueue;
+        interaction.reply(`loopqueue is set to ${q.loopQueue}`)
     }
 } as Command;
