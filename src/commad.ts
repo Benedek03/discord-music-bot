@@ -23,3 +23,7 @@ commandDataArray.push(loopsong.data);
 import loopqueue from './cmds/loopqueue';
 commandMap.set(loopqueue.data.name, loopqueue);
 commandDataArray.push(loopqueue.data);
+
+import disconnect from './cmds/disconnect';
+commandMap.set(disconnect.data.name, disconnect);
+commandDataArray.push(disconnect.data);

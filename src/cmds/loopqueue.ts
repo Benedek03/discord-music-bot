@@ -18,7 +18,6 @@ export default {
             interaction.reply('you have to be in the same voice channel with me to use this command!')
             return;
         }
-        
         if (!queueMap.has(interaction.guildId)) {
             interaction.reply('there is no queue in this guild');
             return;

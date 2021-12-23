@@ -13,8 +13,8 @@ export default {
             interaction.reply('there is no queue in this guild');
             return;
         }
-
         let q = queueMap.get(interaction.guildId) as Queue;
+        
         let embed = new MessageEmbed()
             .setColor(0xff0000)
             .setTitle('Current queue:')

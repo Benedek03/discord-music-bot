@@ -5,7 +5,7 @@ import { Queue, queueMap } from '../queue';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('loopsong')
+        .setName('disconnect')
         .setDescription('asdgfgfdashgdsfhsdf')
         .toJSON(),
     async execute(interaction: CommandInteraction) {
@@ -24,7 +24,7 @@ export default {
         }
         let q = queueMap.get(interaction.guildId) as Queue;
         
-        q.loopSong = !q.loopSong;
-        interaction.reply(`loopsong is set to ${q.loopSong}`)
+        q.leave();
+        interaction.reply('disconnected')
     }
 } as Command;
