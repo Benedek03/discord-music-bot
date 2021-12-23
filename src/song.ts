@@ -20,32 +20,3 @@ export async function createResource(url: string) {
     let asdf = await ytdl(url, { highWaterMark: 1 << 25 });
     return createAudioResource(asdf);
 }
-
-// import ytdl from "ytdl-core";
-
-// client.on('messageCreate', msg => {
-    //     if (!msg.guild || !msg.guildId) return;
-    //     if (msg.content != 'ping') return;
-
-//     msg.reply('pong');
-//     try {
-//         let player = createAudioPlayer();
-//         let connection = joinVoiceChannel({
-//             selfDeaf: false,
-//             selfMute: false,
-//             guildId: msg.guildId,
-//             channelId: msg.member?.voice.channelId as string,
-//             adapterCreator: msg.guild.voiceAdapterCreator
-//         });
-//         (async () => {
-//             // let r = await ytdl('https://www.youtube.com/watch?v=-qWxHEUukEc&ab_channel=MusicLibrary-1Hour',{highWaterMark:1<<25});
-//             let r = await ytdl('https://www.youtube.com/watch?v=-qWxHEUukEc&ab_channel=MusicLibrary-1Hour',{highWaterMark:1<<25});
-//             let res = createAudioResource(r);
-//             connection.subscribe(player);
-//             player.play(res);
-//         })();
-
-//     } catch (err) {
-//         console.error(err);
-//     }
-// });
