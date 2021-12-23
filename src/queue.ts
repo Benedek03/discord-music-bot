@@ -4,10 +4,10 @@ import { createResource, createSong, Song } from './song'
 
 export let queueMap = new Map<string, Queue>();
 
-export async function createQueue(channel: VoiceChannel | StageChannel, url: string) {
+export async function createQueue(channel: VoiceChannel | StageChannel, song: Song) {
     let q = new Queue(channel);
     queueMap.set(channel.guildId, q);
-    await q.addSong(url);
+    await q.addSong(song);
     q.play();
     q.player.on(AudioPlayerStatus.Idle, () => {
         q.shift();
@@ -70,8 +70,8 @@ export class Queue {
         this.player.play(await createResource(this.songs[0].url));
     }
 
-    async addSong(url: string) {
-        this.songs.push(await createSong(url));
+    async addSong(s: Song) {
+        this.songs.push(s);
     }
 
     leave() {

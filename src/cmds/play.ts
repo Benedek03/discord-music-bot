@@ -2,6 +2,7 @@ import { Command } from '../commad';
 import { CommandInteraction, GuildMember } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { createQueue, queueMap } from '../queue';
+import { createSong } from '../song';
 
 export default {
     data: new SlashCommandBuilder()
@@ -18,18 +19,25 @@ export default {
             interaction.reply('you have to be in a voice channel to use this command!')
             return;
         }
-        if (queueMap.has(interaction.guildId) && interaction.member.voice.channelId !=queueMap.get(interaction.guildId)?.channelId) {
+        if (queueMap.has(interaction.guildId) && interaction.member.voice.channelId != queueMap.get(interaction.guildId)?.channelId) {
             interaction.reply('you have to be in the same voice channel with me to use this command!')
             return;
         }
-        
+
         let url = interaction.options.getString('str') as string;
-        //TODO url validation
-        if (queueMap.has(interaction.guildId)) {
-            queueMap.get(interaction.guildId)?.addSong(url);
-        } else {
-            createQueue(interaction.member.voice.channel, url)
+        let song = await createSong(url)
+        if (!song) {
+            interaction.reply('cant play this');
+            return;
         }
-        interaction.reply(`added ${url} to queue`)
+
+        console.log(song);
+        
+        if (queueMap.has(interaction.guildId)) {
+            queueMap.get(interaction.guildId)?.addSong(song);
+        } else {
+            createQueue(interaction.member.voice.channel, song)
+        }
+        interaction.reply(`added ${song.url} to queue`)
     }
 } as Command;
