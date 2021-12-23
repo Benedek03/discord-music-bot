@@ -27,3 +27,11 @@ commandDataArray.push(loopqueue.data);
 import disconnect from './cmds/disconnect';
 commandMap.set(disconnect.data.name, disconnect);
 commandDataArray.push(disconnect.data);
+
+import skip from './cmds/skip';
+commandMap.set(skip.data.name, skip);
+commandDataArray.push(skip.data);
+
+import remove from './cmds/remove';
+commandMap.set(remove.data.name, remove);
+commandDataArray.push(remove.data);
