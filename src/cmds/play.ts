@@ -30,9 +30,6 @@ export default {
             interaction.reply('cant play this');
             return;
         }
-
-        console.log(song);
-        
         if (queueMap.has(interaction.guildId)) {
             queueMap.get(interaction.guildId)?.addSong(song);
         } else {
