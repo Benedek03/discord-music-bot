@@ -1,10 +1,5 @@
 import mongo from "mongoose";
 import { Song } from "../song";
-import { config as dotenv } from 'dotenv'; dotenv();
-if (!process.env.MONGO_URL) {
-    console.error("no process.env.MONGO_URL in .env");
-    process.exit();
-} mongo.connect(process.env.MONGO_URL);
 
 interface pl extends mongo.Document {
     songs: [{

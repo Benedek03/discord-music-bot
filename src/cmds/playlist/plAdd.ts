@@ -1,14 +1,13 @@
 import { Command } from '../../commad';
-import { CommandInteraction, GuildMember } from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { createQueue, queueMap } from '../../queue';
 import { createSong } from '../../song';
-import { getPlaylistId, pushSong } from '../../database';
-import { guildId } from '../../test';
+import { gGetPlId } from '../../database/guild';
+import { plAddSong } from '../../database/playlist';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('addtoplaylist')
+        .setName('pladd')
         .setDescription('dasfadfgsdfhagashgfdsb')
         .addStringOption(o =>
             o.setName('name')
@@ -20,20 +19,19 @@ export default {
                 .setRequired(true)
         ).toJSON(),
     async execute(interaction: CommandInteraction) {
-        let url = interaction.options.getString('url') as string;
         let name = interaction.options.getString('name') as string;
+        let url = interaction.options.getString('url') as string;
+        let id = await gGetPlId(interaction.guildId, name);
+        if (!id) {
+            interaction.reply('no playlist with this name')
+            return;
+        }
         let song = await createSong(url)
         if (!song) {
             interaction.reply('cant play this');
             return;
         }
-        let id = await getPlaylistId(interaction.guildId, name);
-        if (id) {
-            await pushSong(id, song);
-            interaction.reply(`added ${song.url} to ${name}`)
-        }
-        else {
-            interaction.reply('no playlist with this name')
-        }
+        await plAddSong(id, song);
+        interaction.reply(`added ${song.url} to ${name}`)
     }
 } as Command;

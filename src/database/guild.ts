@@ -1,9 +1,4 @@
 import mongo from "mongoose";
-import { config as dotenv } from 'dotenv'; dotenv();
-if (!process.env.MONGO_URL) {
-    console.error("no process.env.MONGO_URL in .env");
-    process.exit();
-} mongo.connect(process.env.MONGO_URL);
 
 interface guild extends mongo.Document {
     _id: string,

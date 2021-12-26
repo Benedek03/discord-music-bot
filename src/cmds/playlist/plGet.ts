@@ -1,21 +1,20 @@
 import { Command } from '../../commad';
-import { CommandInteraction, GuildMember, MessageEmbed } from 'discord.js';
+import { CommandInteraction, MessageEmbed } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { Queue, queueMap } from '../../queue';
-import { getPlaylists } from '../../database';
+import { gGetPlaylists } from '../../database/guild';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('getplaylists')
+        .setName('plget')
         .setDescription('asdgfgfdashgdsfhsdf')
         .toJSON(),
     async execute(interaction: CommandInteraction) {
-        let asd = await getPlaylists(interaction.guildId);
+        let playlists = await gGetPlaylists(interaction.guildId);
         let embed = new MessageEmbed()
             .setColor(0xff0000)
-            .setTitle('Playlist:')
-        for (let i = 0; i < asd.length; i++) {
-            embed.addField(asd[i].name, asd[i].playlistId.toString());
+            .setTitle('Playlists:')
+        for (let i = 0; i < playlists.length; i++) {
+            embed.addField(playlists[i].name, playlists[i].playlistId.toString());
         }
         interaction.reply({ embeds: [embed] });
     }

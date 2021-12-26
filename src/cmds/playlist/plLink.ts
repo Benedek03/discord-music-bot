@@ -1,11 +1,12 @@
 import { Command } from '../../commad';
 import { CommandInteraction, GuildMember, MessageEmbed } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { createPlaylist, getPlaylistId, getSongs, linkPlaylist } from '../../database';
+import { plExists } from '../../database/playlist';
+import { gLinkPl } from '../../database/guild';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('linkplaylist')
+        .setName('pllink')
         .setDescription('dasfadfgsdfhagashgfdsb')
         .addStringOption(o =>
             o.setName('id')
@@ -17,15 +18,15 @@ export default {
                 .setRequired(true)
         ).toJSON(),
     async execute(interaction: CommandInteraction) {
-        let id = interaction.options.getString('id') as string;
+        let playlistId = interaction.options.getString('id') as string;
         let name = interaction.options.getString('name') as string;
-        let songs = await getSongs(id);
-        if (songs)
-            if (await linkPlaylist(interaction.guildId, id, name))
-                interaction.reply(`new playlist created (name: ${name}, id: ${id})`);
-            else
-                interaction.reply('a playlist with this name already exists');
-        else
+        if (!await plExists(playlistId)) {
             interaction.reply('this id doesnt exists');
+            return;
+        }
+        if (await gLinkPl(interaction.guildId, playlistId, name))
+            interaction.reply(`new playlist created (name: ${name}, id: ${playlistId})`);
+        else
+            interaction.reply('a playlist with this name already exists');
     }
 } as Command;

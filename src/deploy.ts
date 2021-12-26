@@ -1,18 +1,9 @@
 import { RESTPostAPIApplicationCommandsJSONBody as DataType } from 'discord-api-types';
 import { REST } from "@discordjs/rest";
 import { config as dotenv } from "dotenv"; dotenv();
-if (!process.env.DISCORD_TOKEN) {
-    console.error('no process.env.DISCORD_TOKEN in .env');
-    process.exit();
-}
-if (!process.env.APPLICATIONID) {
-    console.error('no process.env.APPLICATIONID in .env');
-    process.exit();
-}
 
-
-const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN);
-const applicationId = process.env.APPLICATIONID;
+const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN as string);
+const applicationId = process.env.APPLICATIONID as string;
 
 export async function deployInGuild(guildId: string, commads: DataType[]) {
     try {

@@ -1,20 +1,20 @@
 import { Command } from '../../commad';
 import { CommandInteraction, GuildMember } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { getPlaylistId } from '../../database';
+import { gGetPlId } from '../../database/guild';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('getplaylistid')
+        .setName('plgetid')
         .setDescription('dasfadfgsdfhagashgfdsb')
         .addStringOption(o =>
-            o.setName('str')
+            o.setName('name')
                 .setDescription('asdfg')
                 .setRequired(true)
         ).toJSON(),
     async execute(interaction: CommandInteraction) {
-        let str = interaction.options.getString('str') as string;
-        let id = await getPlaylistId(interaction.guildId, str);
+        let name = interaction.options.getString('name') as string;
+        let id = await gGetPlId(interaction.guildId, name);
         if (id)
             interaction.reply(id);
         else
