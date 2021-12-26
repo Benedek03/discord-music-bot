@@ -26,7 +26,7 @@ for (const f of [
     './cmds/playlist/plRemove.js',
     './cmds/playlist/plRemoveSong.js',
     './cmds/playlist/plPlay.js',
-    // './cmds/playlist/pl',
+    './cmds/playlist/plReplaceQueue.js',
 ]) {
     const c = require(f).default;
     // console.log(c);
