@@ -27,7 +27,8 @@ export default {
             return;
         }
         let q = queueMap.get(interaction.guildId) as Queue;
-
+        let temp = q.loopSong;
+        q.loopSong = false;
         let int = interaction.options.getInteger('int');
         if (!int)
             int = 1;
@@ -44,6 +45,8 @@ export default {
         }
         if (queueMap.has(interaction.guildId))
             q.play();
+        q.loopSong = temp;
         interaction.reply(`skipped ${int} songs`);
+
     }
 } as Command;
