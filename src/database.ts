@@ -32,8 +32,14 @@ export async function createPlaylist(): Promise<string> {
     return (await playlistModel.create({ songs: [] }))._id.toString();
 }
 
-export async function getSongs(playlistId: string): Promise<Song[]> {
-    return (await playlistModel.findById(playlistId)).songs;
+export async function getSongs(playlistId: string): Promise<Song[] | null> {
+    try {
+        let asd = await playlistModel.findById(playlistId);
+        if (asd)
+            return asd.songs as Song[];
+    } catch (error) {
+
+    } return null;
 }
 
 export async function pushSong(playlistId: string, song: Song) {
@@ -44,7 +50,7 @@ export async function pushSong(playlistId: string, song: Song) {
 }
 
 export async function removeSong(playlistId: string, index: number) {
-    let s = await getSongs(playlistId);
+    let s = await getSongs(playlistId) as Song[];
     s.splice(index, 1);
     await playlistModel.findByIdAndUpdate(
         playlistId,
@@ -90,6 +96,6 @@ export async function removePlaylist(guildId: string, name: string) {
     );
 }
 
-export async function getPlaylists(guildId:string) {
+export async function getPlaylists(guildId: string) {
     return (await guildModel.findById(guildId)).playlists;
 }

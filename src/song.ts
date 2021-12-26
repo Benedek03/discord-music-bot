@@ -15,7 +15,7 @@ export async function createSong(url: string) {
         if (!ytdl.validateURL(url))
             return null;
         let data = await ytdl.getInfo(url)
-        if (data.videoDetails.isPrivate || data.videoDetails.age_restricted)
+        if (data.videoDetails.isPrivate || data.videoDetails.age_restricted || data.videoDetails.isUnlisted)
             return null;
         return {
             title: data.videoDetails.title,
