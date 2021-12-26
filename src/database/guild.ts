@@ -1,5 +1,4 @@
 import mongo from "mongoose";
-import { Song } from "../song";
 import { config as dotenv } from 'dotenv'; dotenv();
 if (!process.env.MONGO_URL) {
     console.error("no process.env.MONGO_URL in .env");
@@ -25,7 +24,7 @@ const guildSchema = new mongo.Schema<guild>({
 });
 const guildModel = mongo.model<guild>('guild', guildSchema);
 
-export async function createGuild(guildId: string) {
+export async function gCreate(guildId: string) {
     if (await guildModel.exists({ _id: guildId }))
         return;
     await guildModel.create({
@@ -34,8 +33,8 @@ export async function createGuild(guildId: string) {
     });
 }
 
-export async function existsName(guildId: string, name: string): Promise<boolean> {
-    await createGuild(guildId);
+export async function gNameExists(guildId: string, name: string): Promise<boolean> {
+    await gCreate(guildId);
     return (await guildModel.findById(guildId) as (guild & { _id: string; })).playlists.some((x: any) => x.name == name)
     // return await guildModel.exists({
     //     _id: guildId,
@@ -43,9 +42,9 @@ export async function existsName(guildId: string, name: string): Promise<boolean
     // });
 }
 
-export async function linkPlaylist(guildId: string, playlistId: string, name: string) {
-    await createGuild(guildId);
-    if (await existsName(guildId, name))
+export async function gLinkPl(guildId: string, playlistId: string, name: string) {
+    await gCreate(guildId);
+    if (await gNameExists(guildId, name))
         return false;
     await guildModel.findByIdAndUpdate(
         guildId,
@@ -54,9 +53,9 @@ export async function linkPlaylist(guildId: string, playlistId: string, name: st
     return true;
 }
 
-export async function getPlaylistId(guildId: string, name: string): Promise<string | null> {
-    await createGuild(guildId);
-    if (!await existsName(guildId, name))
+export async function gGetPlId(guildId: string, name: string): Promise<string | null> {
+    await gCreate(guildId);
+    if (!await gNameExists(guildId, name))
         return null;
     let guild = await guildModel.findById(guildId);
     if (!guild)
@@ -64,9 +63,9 @@ export async function getPlaylistId(guildId: string, name: string): Promise<stri
     return guild.playlists.filter((x: any) => x.name == name)[0].playlistId.toString();
 }
 
-export async function removePlaylist(guildId: string, name: string) {
-    await createGuild(guildId);
-    if (!await existsName(guildId, name))
+export async function gRemovePl(guildId: string, name: string) {
+    await gCreate(guildId);
+    if (!await gNameExists(guildId, name))
         return false;
     await guildModel.findByIdAndUpdate(
         guildId,
@@ -75,7 +74,7 @@ export async function removePlaylist(guildId: string, name: string) {
     return true;
 }
 
-export async function getPlaylists(guildId: string) {
-    await createGuild(guildId);
+export async function gGetPlaylists(guildId: string) {
+    await gCreate(guildId);
     return (await guildModel.findById(guildId) as (guild & { _id: string; })).playlists;
 }

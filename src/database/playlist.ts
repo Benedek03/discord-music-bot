@@ -23,32 +23,32 @@ const playlistSchema = new mongo.Schema<pl>({
 });
 const playlistModel = mongo.model<pl>('playlist', playlistSchema);
 
-export async function createPlaylist(): Promise<string> {
+export async function plCreate(): Promise<string> {
     return (await playlistModel.create({ songs: [] }))._id.toString();
 }
 
-export async function exists(playlistId: string) {
+export async function plExists(playlistId: string) {
     if (!mongo.isValidObjectId(playlistId))
         return false;
     return await playlistModel.exists({ _id: playlistId });
 }
 
-export async function getSongs(playlistId: string): Promise<Song[] | null> {
+export async function plGetSongs(playlistId: string): Promise<Song[] | null> {
     let asd = await playlistModel.findById(playlistId);
     if (asd)
         return asd.songs as Song[];
     return null;
 }
 
-export async function pushSong(playlistId: string, song: Song) {
+export async function plAddSong(playlistId: string, song: Song) {
     await playlistModel.findByIdAndUpdate(
         playlistId,
         { $push: { songs: song, } }
     );
 }
 
-export async function removeSong(playlistId: string, index: number) {
-    let s = await getSongs(playlistId);
+export async function plRemoveSong(playlistId: string, index: number) {
+    let s = await plGetSongs(playlistId);
     if (!s || index < 0 || index > s.length - 1)
         return false;
     s.splice(index, 1);

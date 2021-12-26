@@ -1,6 +1,6 @@
 // import { createGuild, createPlaylist, getPlaylistId, getPlaylists, getSongs, linkPlaylist, pushSong, removePlaylist, removeSong } from "./database";
 import { createSong } from "../song";
-import { existsName, getPlaylistId, getPlaylists, linkPlaylist, removePlaylist } from "./guild";
+import { gNameExists, gGetPlId, gGetPlaylists, gLinkPl, gRemovePl } from "./guild";
 import { createPlaylist, exists, getSongs, pushSong, removeSong } from "./playlist";
 
 export let arr = [
@@ -37,15 +37,15 @@ export let guildId = "851018777739132938";
     console.log(await removeSong(playlistId, 7));
     console.log(await getSongs(playlistId));
 
-    console.log(await linkPlaylist(guildId, playlistId, 'muzsika'))
-    console.log(await linkPlaylist(guildId, playlistId, 'muzsika'))
-    console.log(await existsName(guildId, 'muzsika'))
-    console.log(await existsName(guildId, 'asdf'))
-    console.log(await getPlaylistId(guildId, 'muzsika'));
-    console.log(await getPlaylistId(guildId, 'asdf'));
-    console.log(await getPlaylists(guildId));
-    console.log(await removePlaylist(guildId, 'muzsika'));
-    console.log(await removePlaylist(guildId, 'asdf'));
+    console.log(await gLinkPl(guildId, playlistId, 'muzsika'))
+    console.log(await gLinkPl(guildId, playlistId, 'muzsika'))
+    console.log(await gNameExists(guildId, 'muzsika'))
+    console.log(await gNameExists(guildId, 'asdf'))
+    console.log(await gGetPlId(guildId, 'muzsika'));
+    console.log(await gGetPlId(guildId, 'asdf'));
+    console.log(await gGetPlaylists(guildId));
+    console.log(await gRemovePl(guildId, 'muzsika'));
+    console.log(await gRemovePl(guildId, 'asdf'));
     //existsname
     //linkpl
     //getid
