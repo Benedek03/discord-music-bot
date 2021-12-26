@@ -1,34 +1,34 @@
 import { Command } from '../../commad';
-import { Song } from '../../song';
-import { CommandInteraction, MessageEmbed } from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
+import { createSong } from '../../song';
 import { gGetPlId } from '../../database/guild';
-import { plGetSongs } from '../../database/playlist';
+import { plAddSong, plRemoveSong } from '../../database/playlist';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('plgetsongs')
+        .setName('plremovesong')
         .setDescription('dasfadfgsdfhagashgfdsb')
         .addStringOption(o =>
             o.setName('name')
                 .setDescription('asdfg')
                 .setRequired(true)
+        ).addIntegerOption(o =>
+            o.setName('index')
+                .setDescription('asdfg')
+                .setRequired(true)
         ).toJSON(),
     async execute(interaction: CommandInteraction) {
         let name = interaction.options.getString('name') as string;
+        let index = interaction.options.getInteger('index') as number;
         let id = await gGetPlId(interaction.guildId, name);
         if (!id) {
-            interaction.reply('no playlist with this name');
+            interaction.reply('no playlist with this name')
             return;
         }
-
-        let songs = await plGetSongs(id) as Song[];
-        let embed = new MessageEmbed()
-            .setColor(0xff0000)
-            .setTitle(`${name}:`);
-        for (let i = 0; i < songs.length; i++) {
-            embed.addField(`${i}. in playlist:`, `[${songs[i].title}](${songs[i].url})`);
-        }
-        interaction.reply({ embeds: [embed] });
+        if (await plRemoveSong(id, index))
+            interaction.reply('yuppie');
+        else
+            interaction.reply('index out of bounds');
     }
 } as Command;
