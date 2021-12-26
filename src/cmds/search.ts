@@ -1,7 +1,7 @@
 import { Command } from '../commad';
-import { CommandInteraction, GuildMember } from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import ytsr from 'ytsr';
+import ytsr, { Video } from 'ytsr';
 
 export default {
     data: new SlashCommandBuilder()
@@ -13,21 +13,15 @@ export default {
                 .setRequired(true)
         ).toJSON(),
     async execute(interaction: CommandInteraction) {
-        interaction.deferReply();
-        let str = interaction.options.getString('str') as string;
-        let asd = (await ytsr(str, { limit: 10 })).items;
-        let reply = "top results:\n";
-
-        let j = 1;
-        for (const i of asd) {
-            if (i.type == 'video') {
-                reply += `${j}: ${i.url}\n`;
-                j++;
-                if (j > 5)
-                    break;
-            }
+        await interaction.reply('working on it');
+        const str = interaction.options.getString('str') as string;
+        const query = (await ytsr.getFilters(str)).get('Type')?.get('Video')?.url as string;
+        const searchResults = (await ytsr(query, { limit: 5 })).items;
+        let reply = "top 5 results:\n";
+        for (let i = 0; i < searchResults.length; i++) {
+            const e = searchResults[i] as Video;
+            reply += `${i + 1}: ${e.url}\n`;
         }
-
         interaction.editReply(reply)
     }
 } as Command;
