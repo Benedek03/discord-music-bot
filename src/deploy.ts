@@ -65,16 +65,15 @@ export async function deleteGlobal() {
 if (require.main === module) {
     const myArgs = process.argv.slice(2);
     console.log('args: (global/guilds) (deploy/deletes) (if guild guildid)');
-    if (myArgs.length == 3)
-        if (myArgs[0].toLowerCase() == 'global') {
-            if (myArgs[1].toLowerCase() == 'delete')
-                deleteGlobal();
-            else if (myArgs[1].toLowerCase() == 'deploy')
-                deployGlobal(commandDataArray);
-        } else if (myArgs[0].toLowerCase() == 'guild') {
-            if (myArgs[1].toLowerCase() == 'delete')
-                deleteInGuild(myArgs[2]);
-            else if (myArgs[1].toLowerCase() == 'deploy')
-                deployInGuild(myArgs[2], commandDataArray);
-        }
+    if (myArgs.length == 2 && myArgs[0].toLowerCase() == 'global') {
+        if (myArgs[1].toLowerCase() == 'delete')
+            deleteGlobal();
+        else if (myArgs[1].toLowerCase() == 'deploy')
+            deployGlobal(commandDataArray);
+    } else if (myArgs.length == 2 && myArgs[0].toLowerCase() == 'guild') {
+        if (myArgs[1].toLowerCase() == 'delete')
+            deleteInGuild(myArgs[2]);
+        else if (myArgs[1].toLowerCase() == 'deploy')
+            deployInGuild(myArgs[2], commandDataArray);
+    }
 }
