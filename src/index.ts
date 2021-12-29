@@ -45,7 +45,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 })
 
 client.on('ready', async () => {
-    await deployInGuild(process.env.TESTGUILDID as string, commandDataArray);
+    // await deployInGuild(process.env.TESTGUILDID as string, commandDataArray);
     connect(process.env.MONGO_URL as string);
     console.log('ready');
 });

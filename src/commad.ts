@@ -10,8 +10,8 @@ export const commandDataArray: DataType[] = [];
 
 for (const f of [
     './cmds/disconnect.js',
-    './cmds/loopqueue.js',
-    './cmds/loopsong.js',
+    './cmds/loopQueue.js',
+    './cmds/loopSong.js',
     './cmds/play.js',
     './cmds/queue.js',
     './cmds/remove.js',

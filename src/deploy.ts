@@ -1,5 +1,6 @@
 import { RESTPostAPIApplicationCommandsJSONBody as DataType } from 'discord-api-types';
 import { REST } from "@discordjs/rest";
+import { commandDataArray } from "./commad";
 import { config as dotenv } from "dotenv"; dotenv();
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN as string);
@@ -59,4 +60,21 @@ export async function deleteGlobal() {
     } catch (error) {
         console.error(error);
     }
+}
+
+if (require.main === module) {
+    const myArgs = process.argv.slice(2);
+    console.log('args: (global/guilds) (deploy/deletes) (if guild guildid)');
+    if (myArgs.length == 3)
+        if (myArgs[0].toLowerCase() == 'global') {
+            if (myArgs[1].toLowerCase() == 'delete')
+                deleteGlobal();
+            else if (myArgs[1].toLowerCase() == 'deploy')
+                deployGlobal(commandDataArray);
+        } else if (myArgs[0].toLowerCase() == 'guild') {
+            if (myArgs[1].toLowerCase() == 'delete')
+                deleteInGuild(myArgs[2]);
+            else if (myArgs[1].toLowerCase() == 'deploy')
+                deployInGuild(myArgs[2], commandDataArray);
+        }
 }
