@@ -1,8 +1,8 @@
 import { Command } from '../../commad';
 import { CommandInteraction, } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { plCreate } from "../../database/playlist";
-import { gLinkPl, gNameExists } from '../../database/guild';
+import { plCreate } from "../../database/playlist.js";
+import { gLinkPl, gNameExists } from '../../database/guild.js';
 
 export default {
     data: new SlashCommandBuilder()

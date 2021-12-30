@@ -1,7 +1,7 @@
-import { commandDataArray, commandMap } from "./commad";
+import { commandDataArray, commandMap } from "./commad.js";
 import { deployInGuild, deleteInGuild } from "./deploy";
 import { Client, Intents, Interaction } from 'discord.js';
-import { connect } from "mongoose";
+import mongo from "mongoose";
 import { config as dotenv } from 'dotenv'; dotenv();
 if (!process.env.DISCORD_TOKEN) {
     console.error('no DISCORD_TOKEN in .env');
@@ -46,7 +46,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
 client.on('ready', async () => {
     // await deployInGuild(process.env.TESTGUILDID as string, commandDataArray);
-    connect(process.env.MONGO_URL as string);
+    mongo.connect(process.env.MONGO_URL as string);
     console.log('ready');
 });
 client.login(process.env.DISCORD_TOKEN);

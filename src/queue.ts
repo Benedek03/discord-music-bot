@@ -1,6 +1,6 @@
 import { AudioPlayer, AudioPlayerStatus, createAudioPlayer, joinVoiceChannel, VoiceConnection } from '@discordjs/voice';
 import { StageChannel, VoiceChannel } from 'discord.js';
-import { createResource, createSong, Song } from './song'
+import { createResource, createSong, Song } from './song.js'
 
 export let queueMap = new Map<string, Queue>();
 

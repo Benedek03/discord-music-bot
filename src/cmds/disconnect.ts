@@ -1,7 +1,7 @@
-import { Command } from '../commad';
+import { Command } from '../commad.js';
 import { CommandInteraction, GuildMember } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { Queue, queueMap } from '../queue';
+import { Queue, queueMap } from '../queue.js';
 
 export default {
     data: new SlashCommandBuilder()

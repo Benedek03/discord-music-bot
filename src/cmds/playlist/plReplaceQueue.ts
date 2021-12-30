@@ -1,10 +1,10 @@
-import { Command } from '../../commad';
+import { Command } from '../../commad.js';
 import { CommandInteraction, GuildMember, } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { plCreate, plGetSongs } from "../../database/playlist";
-import { gGetPlId, gLinkPl, gNameExists } from '../../database/guild';
-import { createQueue, Queue, queueMap } from '../../queue';
-import { Song } from '../../song';
+import { plCreate, plGetSongs } from "../../database/playlist.js";
+import { gGetPlId, gLinkPl, gNameExists } from '../../database/guild.js';
+import { createQueue, Queue, queueMap } from '../../queue.js';
+import { Song } from '../../song.js';
 
 export default {
     data: new SlashCommandBuilder()

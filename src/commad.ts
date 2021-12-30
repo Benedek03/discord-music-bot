@@ -31,7 +31,7 @@ for (const f of [
     './cmds/search.js',
     './cmds/playSearch.js',
 ]) {
-    const c = require(f).default;
+    const c = (await import(f)).default;
     // console.log(c);
     commandMap.set(c.data.name, c);
     commandDataArray.push(c.data);

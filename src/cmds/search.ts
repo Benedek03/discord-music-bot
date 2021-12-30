@@ -1,4 +1,4 @@
-import { Command } from '../commad';
+import { Command } from '../commad.js';
 import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
 import ytsr, { Video } from 'ytsr';

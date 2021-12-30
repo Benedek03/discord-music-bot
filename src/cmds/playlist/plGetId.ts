@@ -1,7 +1,7 @@
-import { Command } from '../../commad';
+import { Command } from '../../commad.js';
 import { CommandInteraction, GuildMember } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { gGetPlId } from '../../database/guild';
+import { gGetPlId } from '../../database/guild.js';
 
 export default {
     data: new SlashCommandBuilder()

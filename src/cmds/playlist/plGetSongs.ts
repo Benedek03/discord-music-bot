@@ -1,9 +1,9 @@
-import { Command } from '../../commad';
-import { Song } from '../../song';
+import { Command } from '../../commad.js';
+import { Song } from '../../song.js';
 import { CommandInteraction, MessageEmbed } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { gGetPlId } from '../../database/guild';
-import { plGetSongs } from '../../database/playlist';
+import { gGetPlId } from '../../database/guild.js';
+import { plGetSongs } from '../../database/playlist.js';
 
 export default {
     data: new SlashCommandBuilder()
