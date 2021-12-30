@@ -70,7 +70,7 @@ if (require.main === module) {
             deleteGlobal();
         else if (myArgs[1].toLowerCase() == 'deploy')
             deployGlobal(commandDataArray);
-    } else if (myArgs.length == 2 && myArgs[0].toLowerCase() == 'guild') {
+    } else if (myArgs.length == 3 && myArgs[0].toLowerCase() == 'guild') {
         if (myArgs[1].toLowerCase() == 'delete')
             deleteInGuild(myArgs[2]);
         else if (myArgs[1].toLowerCase() == 'deploy')
