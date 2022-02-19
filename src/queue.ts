@@ -37,6 +37,7 @@ export class Queue {
             selfMute: false,
             guildId: channel.guild.id,
             channelId: channel.id,
+            //@ts-ignorew
             adapterCreator: channel.guild.voiceAdapterCreator
         });
         this.player = createAudioPlayer();

@@ -1,6 +1,6 @@
 import { RESTPostAPIApplicationCommandsJSONBody as DataType } from 'discord-api-types';
 import { REST } from "@discordjs/rest";
-import { commandDataArray } from "./commad";
+import { commandDataArray } from "./commad.js";
 import { config as dotenv } from "dotenv"; dotenv();
 
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN as string);
@@ -62,18 +62,18 @@ export async function deleteGlobal() {
     }
 }
 
-if (require.main === module) {
-    console.log('args: (global/guilds) (deploy/deletes) (if guild guildid)');
-    const myArgs = process.argv.slice(2);
-    if (myArgs.length == 2 && myArgs[0].toLowerCase() == 'global') {
-        if (myArgs[1].toLowerCase() == 'delete')
-            await deleteGlobal();
-        else if (myArgs[1].toLowerCase() == 'deploy')
-            await deployGlobal(commandDataArray);
-    } else if (myArgs.length == 3 && myArgs[0].toLowerCase() == 'guild') {
-        if (myArgs[1].toLowerCase() == 'delete')
-            await deleteInGuild(myArgs[2]);
-        else if (myArgs[1].toLowerCase() == 'deploy')
-            await deployInGuild(myArgs[2], commandDataArray);
-    }
-}
+// if (require.main === module) {
+//     console.log('args: (global/guilds) (deploy/deletes) (if guild guildid)');
+//     const myArgs = process.argv.slice(2);
+//     if (myArgs.length == 2 && myArgs[0].toLowerCase() == 'global') {
+//         if (myArgs[1].toLowerCase() == 'delete')
+//             await deleteGlobal();
+//         else if (myArgs[1].toLowerCase() == 'deploy')
+//             await deployGlobal(commandDataArray);
+//     } else if (myArgs.length == 3 && myArgs[0].toLowerCase() == 'guild') {
+//         if (myArgs[1].toLowerCase() == 'delete')
+//             await deleteInGuild(myArgs[2]);
+//         else if (myArgs[1].toLowerCase() == 'deploy')
+//             await deployInGuild(myArgs[2], commandDataArray);
+//     }
+// }

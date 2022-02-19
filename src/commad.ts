@@ -3,7 +3,7 @@ import { CommandInteraction } from 'discord.js';
 
 export type Command = {
     data: DataType;
-    execute: (interaction: CommandInteraction) => Promise<void>;
+    execute: (interaction: CommandInteraction, guildId: string) => Promise<void>;
 }
 export const commandMap: Map<string, Command> = new Map<string, Command>();
 export const commandDataArray: DataType[] = [];
@@ -16,20 +16,19 @@ for (const f of [
     './cmds/queue.js',
     './cmds/remove.js',
     './cmds/skip.js',
-
-    './cmds/playlist/plAdd.js',
-    './cmds/playlist/plCreate.js',
-    './cmds/playlist/plGet.js',
-    './cmds/playlist/plGetId.js',
-    './cmds/playlist/plGetSongs.js',
-    './cmds/playlist/plLink.js',
-    './cmds/playlist/plRemove.js',
-    './cmds/playlist/plRemoveSong.js',
-    './cmds/playlist/plPlay.js',
-    './cmds/playlist/plReplaceQueue.js',
-
     './cmds/search.js',
     './cmds/playSearch.js',
+
+    './cmds/playlist/add.js',
+    './cmds/playlist/create.js',
+    './cmds/playlist/playlists.js',
+    './cmds/playlist/getId.js',
+    './cmds/playlist/getSongs.js',
+    './cmds/playlist/link.js',
+    './cmds/playlist/remove.js',
+    './cmds/playlist/removeSong.js',
+    './cmds/playlist/play.js',
+    './cmds/playlist/replaceQueue.js',
 ]) {
     const c = (await import(f)).default;
     // console.log(c);

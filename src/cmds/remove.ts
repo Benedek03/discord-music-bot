@@ -5,40 +5,40 @@ import { Queue, queueMap } from '../queue.js';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('remove')
-        .setDescription('dasfadfgsdfhagashgfdsb')
+        .setName('rm')
+        .setDescription('Removes nth song in the queue.')
         .addIntegerOption(o =>
-            o.setName('index')
-                .setDescription('asdfg')
+            o.setName('n')
+                .setDescription('n seems kinda sussy not gonna lie')
                 .setRequired(true)
         ).toJSON(),
-    async execute(interaction: CommandInteraction) {
+    async execute(interaction: CommandInteraction, guildId: string) {
         if (!(interaction.member instanceof GuildMember)) return;
         if (!interaction.member.voice.channel) {
             interaction.reply('you have to be in a voice channel to use this command!')
             return;
         }
-        if (queueMap.has(interaction.guildId) && interaction.member.voice.channelId != queueMap.get(interaction.guildId)?.channelId) {
+        if (queueMap.has(guildId) && interaction.member.voice.channelId != queueMap.get(guildId)?.channelId) {
             interaction.reply('you have to be in the same voice channel with me to use this command!')
             return;
         }
-        if (!queueMap.has(interaction.guildId)) {
+        if (!queueMap.has(guildId)) {
             interaction.reply('there is no queue in this guild');
             return;
         }
-        let q = queueMap.get(interaction.guildId) as Queue;
+        let q = queueMap.get(guildId) as Queue;
 
-        let index = interaction.options.getInteger('index') as number;
-        if (index < 1) {
+        let n = interaction.options.getInteger('n') as number;
+        if (n < 1) {
             interaction.reply('arg have to be at least 1');
             return;
         }
-        if (index > q.songs.length-1) {
+        if (n > q.songs.length-1) {
             interaction.reply("arg can't be bigger than the length of the queue");
             return;
         }
-        let url = q.songs[index].url;
-        q.songs.splice(index, 1);
+        let url = q.songs[n].url;
+        q.songs.splice(n, 1);
         interaction.reply(`removed ${url} from queue`)
     }
 } as Command;

@@ -1,5 +1,5 @@
 import { commandDataArray, commandMap } from "./commad.js";
-import { deployInGuild, deleteInGuild } from "./deploy";
+import { deployInGuild, deleteInGuild } from "./deploy.js";
 import { Client, Intents, Interaction } from 'discord.js';
 import mongo from "mongoose";
 import { config as dotenv } from 'dotenv'; dotenv();
@@ -34,7 +34,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     }
     try {
         if (commandMap.has(interaction.commandName)) {
-            await commandMap.get(interaction.commandName)?.execute(interaction);
+            await commandMap.get(interaction.commandName)?.execute(interaction, interaction.guildId);
         } else {
             interaction.reply('this command is not working at the moment');
         }
@@ -45,7 +45,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 })
 
 client.on('ready', async () => {
-    // await deployInGuild(process.env.TESTGUILDID as string, commandDataArray);
+    await deployInGuild(process.env.TESTGUILDID as string, commandDataArray);
     mongo.connect(process.env.MONGO_URL as string);
     console.log('ready');
 });

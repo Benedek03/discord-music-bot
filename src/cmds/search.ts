@@ -5,16 +5,16 @@ import ytsr, { Video } from 'ytsr';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('search')
-        .setDescription('dasfadfgsdfhagashgfdsb')
+        .setName('sr')
+        .setDescription('Lists top 5 videos found on YouTube.')
         .addStringOption(o =>
-            o.setName('str')
-                .setDescription('asdfg')
+            o.setName('searchterm')
+                .setDescription('Search something')
                 .setRequired(true)
         ).toJSON(),
-    async execute(interaction: CommandInteraction) {
+    async execute(interaction: CommandInteraction, guildId: string) {
         await interaction.reply('working on it');
-        const str = interaction.options.getString('str') as string;
+        const str = interaction.options.getString('searchterm') as string;
         const query = (await ytsr.getFilters(str)).get('Type')?.get('Video')?.url as string;
         const searchResults = (await ytsr(query, { limit: 5 })).items;
         let reply = "top 5 results:\n";

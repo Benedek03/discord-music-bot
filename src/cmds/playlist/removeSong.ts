@@ -1,34 +1,32 @@
 import { Command } from '../../commad.js';
 import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { createSong } from '../../song.js';
-import { gGetPlId } from '../../database/guild.js';
-import { plAddSong, plRemoveSong } from '../../database/playlist.js';
+import { getPlayistId, removeSong } from '../../db.js';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('plremovesong')
-        .setDescription('dasfadfgsdfhagashgfdsb')
+        .setName('removesong')
+        .setDescription('Removes the nth song from the playlist.')
         .addStringOption(o =>
             o.setName('name')
-                .setDescription('asdfg')
+                .setDescription('name of the playlist')
                 .setRequired(true)
         ).addIntegerOption(o =>
-            o.setName('index')
-                .setDescription('asdfg')
+            o.setName('n')
+                .setDescription('n seems kinda sussy not gonna lie')
                 .setRequired(true)
         ).toJSON(),
-    async execute(interaction: CommandInteraction) {
+    async execute(interaction: CommandInteraction, guildId: string) {
         let name = interaction.options.getString('name') as string;
         let index = interaction.options.getInteger('index') as number;
-        let id = await gGetPlId(interaction.guildId, name);
+        let id = await getPlayistId(guildId, name);
         if (!id) {
             interaction.reply('no playlist with this name')
             return;
         }
-        if (await plRemoveSong(id, index))
+        if (await removeSong(id, index))
             interaction.reply('yuppie');
         else
-            interaction.reply('index out of bounds');
+            interaction.reply('n out of bounds');
     }
 } as Command;

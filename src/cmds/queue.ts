@@ -5,15 +5,15 @@ import { Queue, queueMap } from '../queue.js';
 
 export default {
     data: new SlashCommandBuilder()
-        .setName('queue')
-        .setDescription('asdgfgfdashgdsfhsdf')
+        .setName('q')
+        .setDescription('Lists the songs in the queue.')
         .toJSON(),
-    async execute(interaction: CommandInteraction) {
-        if (!queueMap.has(interaction.guildId)) {
+    async execute(interaction: CommandInteraction, guildId: string) {
+        if (!queueMap.has(guildId)) {
             interaction.reply('there is no queue in this guild');
             return;
         }
-        let q = queueMap.get(interaction.guildId) as Queue;
+        let q = queueMap.get(guildId) as Queue;
         
         let embed = new MessageEmbed()
             .setColor(0xff0000)
