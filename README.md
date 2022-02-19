@@ -1,4 +1,4 @@
-# Commands
+## Common commands
 ### /p <url: string>
 Plays the audio of of the YouTube video. This command only works with YouTube URLs.
 
@@ -26,7 +26,7 @@ Lists top 5 videos found on YouTube.
 ### /psr <searchTerm: string> 
 Plays first video found on YouTube.
 
-## PLaylist commands
+## Playlist commands
 ### /create <name: string>
 Creates a playlist with the given name.
 
