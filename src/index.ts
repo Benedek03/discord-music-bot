@@ -1,5 +1,5 @@
 import { commandDataArray, commandMap } from "./commad.js";
-import { deployInGuild, deleteInGuild } from "./deploy.js";
+import { deployInGuild, deleteInGuild, deployGlobal } from "./deploy.js";
 import { Client, Intents, Interaction } from 'discord.js';
 import mongo from "mongoose";
 import { config as dotenv } from 'dotenv'; dotenv();
@@ -45,7 +45,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 })
 
 client.on('ready', async () => {
-    await deployInGuild(process.env.TESTGUILDID as string, commandDataArray);
+    await deployGlobal(commandDataArray);
     mongo.connect(process.env.MONGO_URL as string);
     console.log('ready');
 });

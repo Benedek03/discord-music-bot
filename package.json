@@ -4,7 +4,8 @@
   "description": "This is a discord bot written in typescript.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node start",
+    "build": "tsc -b"
   },
   "author": "Benedek",
   "license": "MIT",
@@ -20,5 +21,8 @@
     "mongoose": "^6.2.1",
     "ytdl-core": "^4.10.1",
     "ytsr": "^3.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
   }
 }
