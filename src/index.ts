@@ -46,7 +46,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
 client.on('ready', async () => {
     await deployGlobal(commandDataArray);
-    mongo.connect(process.env.MONGO_URL as string);
+    mongo.connect(process.env.MONGO_URI as string);
     console.log('ready');
 });
 client.login(process.env.DISCORD_TOKEN);

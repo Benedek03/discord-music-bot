@@ -1,10 +1,10 @@
 {
-  "name": "music-bot",
+  "name": "discord-music-bot",
   "version": "3.0.0",
   "description": "This is a discord bot written in typescript.",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node start",
+    "start": "node .",
     "build": "tsc -b"
   },
   "author": "Benedek",
