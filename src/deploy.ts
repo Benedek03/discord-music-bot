@@ -1,4 +1,4 @@
-import { RESTPostAPIApplicationCommandsJSONBody as DataType } from 'discord-api-types';
+import { RESTPostAPIApplicationCommandsJSONBody as DataType } from 'discord-api-types/v9';
 import { REST } from "@discordjs/rest";
 import { commandDataArray } from "./commad.js";
 import { config as dotenv } from "dotenv"; dotenv();
