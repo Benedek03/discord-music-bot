@@ -1,4 +1,4 @@
-import { RESTPostAPIApplicationCommandsJSONBody as DataType } from 'discord-api-types/v9';
+import { RESTPostAPIApplicationCommandsJSONBody as DataType } from 'discord-api-types';
 import { CommandInteraction } from 'discord.js';
 
 export type Command = {
@@ -31,7 +31,6 @@ for (const f of [
     './cmds/playlist/replaceQueue.js',
 ]) {
     const c = (await import(f)).default;
-    // console.log(c);
     commandMap.set(c.data.name, c);
     commandDataArray.push(c.data);
 }
