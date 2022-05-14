@@ -5,23 +5,27 @@ you can build the image like this:
 ```
 docker build . -t benedek03/discord-music-bot
 ```
+
+
 ### Running a container
-you can then run the container (it will automaticly register the slash commands) like this:
+to run the container you have to create a .env file first
 ```
-docker run -d --name discord-music-bot benedek03/discord-music-bot\
-    -e DISCORD_TOKEN={DISCORD_TOKEN}\
-    -e MONGO_URI={MONGO_URI}
+DISCORD_TOKEN=
+MONGO_URI=
 ```
-you can register the commands in only a test guild like this:
+then you can then run the container (it will automaticly register the slash commands) like this:
 ```
-docker run -d --name discord-music-bot benedek03/discord-music-bot\
-    -e DISCORD_TOKEN=$DISCORD_TOKEN\
-    -e MONGO_URI=$MONGO_URI\
-    -e TESTGUILDID=$TESTGUILDID
+docker run -d --env-file .env --name discord-music-bot benedek03/discord-music-bot
 ```
+
 ### Deleting slash commands
-you can delete the slash commands like this:
+if you want to delete the slash commands add this to your .env file
 ```
-docker run benedek03/discord-music-bot\
-    -e DELETE_COMMANDS="TRUE"
+DELETE_COMMANDS="TRUE"
+```
+
+#### debug 
+if you want to register the commands  in only one server add this to your .env file
+``` 
+TESTGUILDID=
 ```

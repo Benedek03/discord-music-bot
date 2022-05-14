@@ -4,6 +4,10 @@ import { REST } from "@discordjs/rest";
 import { Client, Intents, Interaction } from 'discord.js';
 import mongo from "mongoose";
 import { config as dotenv } from 'dotenv'; dotenv();
+if (!process.env.DISCORD_TOKEN) {
+    console.error('no DISCORD_TOKEN variable in the enviroment');
+    process.exit();
+}
 
 const client = new Client({
     intents: [
@@ -63,10 +67,7 @@ client.on('ready', async () => {
     //#endregion
 
     //#region checking if necessary env vars exist
-    if (!process.env.DISCORD_TOKEN) {
-        console.error('no DISCORD_TOKEN variable in the enviroment');
-        process.exit();
-    } if (!process.env.MONGO_URI) {
+    if (!process.env.MONGO_URI) {
         console.error("no MONGO_URI variable in the enviroment");
         process.exit();
     }
