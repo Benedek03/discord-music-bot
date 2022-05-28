@@ -1,20 +1,9 @@
 import { AudioPlayer, AudioPlayerStatus, createAudioPlayer, joinVoiceChannel, VoiceConnection } from '@discordjs/voice';
 import { StageChannel, VoiceChannel } from 'discord.js';
-import { createResource, createSong, Song } from './song.js'
-
-export let queueMap = new Map<string, Queue>();
-
-export async function createQueue(channel: VoiceChannel | StageChannel, song: Song) {
-    let q = new Queue(channel);
-    queueMap.set(channel.guildId, q);
-    await q.addSong(song);
-    q.play();
-    q.player.on(AudioPlayerStatus.Idle, () => {
-        q.shift();
-        if (queueMap.has(channel.guildId))
-            q.play();
-    })
-}
+import { Song } from './song.js'
+import { createAudioResource } from '@discordjs/voice';
+import ytdl from "ytdl-core";
+import { guildMap } from './index.js';
 
 export class Queue {
     public guildId: string;
@@ -28,9 +17,6 @@ export class Queue {
     constructor(channel: VoiceChannel | StageChannel) {
         this.guildId = channel.guildId;
         this.channelId = channel.id;
-        this.loopQueue = false;
-        this.loopSong = false;
-        this.songs = [];
 
         this.connection = joinVoiceChannel({
             selfDeaf: false,
@@ -68,7 +54,7 @@ export class Queue {
     }
 
     async play() {
-        this.player.play(await createResource(this.songs[0].url));
+        this.player.play(createAudioResource(await ytdl(this.songs[0].url, { highWaterMark: 1 << 25 })));
     }
 
     async addSong(s: Song) {
@@ -77,6 +63,18 @@ export class Queue {
 
     leave() {
         this.connection.destroy();
-        queueMap.delete(this.guildId);
+        guildMap.delete(this.guildId);
     }
+}
+
+export async function newQueue(channel: VoiceChannel | StageChannel, song: Song) {
+    let q = new Queue(channel);
+    guildMap.set(channel.guildId, q);
+    await q.addSong(song);
+    q.play();
+    q.player.on(AudioPlayerStatus.Idle, () => {
+        q.shift();
+        if (guildMap.has(channel.guildId))
+            q.play();
+    })
 }

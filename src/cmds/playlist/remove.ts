@@ -1,6 +1,6 @@
-import { Command } from '../../commad.js';
-import { CommandInteraction, Intents } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
+import { CommandInteraction } from 'discord.js';
+import { Command } from '../../commad.js';
 import { nameExists, removePlaylist } from '../../db.js';
 
 export default {

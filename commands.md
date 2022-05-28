@@ -1,6 +1,6 @@
 ## Common commands
 ### /p <url: string>
-Plays the audio of of the YouTube video. This command only works with YouTube URLs.
+Plays the audio of of the YouTube video.
 
 ### /q
 Lists the songs in the queue.
@@ -22,9 +22,6 @@ Toggles loopsong.
 
 ### /sr <searchTerm: string> 
 Lists top 5 videos found on YouTube.
-
-### /psr <searchTerm: string> 
-Plays first video found on YouTube.
 
 ## Playlist commands
 ### /create <name: string>

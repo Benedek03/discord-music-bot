@@ -1,7 +1,7 @@
-import { Command } from '../../commad.js';
-import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { createSong } from '../../song.js';
+import { CommandInteraction } from 'discord.js';
+import { Command } from '../../commad.js';
+import { constructSong } from '../../song.js';
 import { addSong, createGuild, getPlayistId } from '../../db.js';
 
 export default {
@@ -26,7 +26,7 @@ export default {
             interaction.reply('no playlist with this name')
             return;
         }
-        let song = await createSong(url)
+        let song = await constructSong(url)
         if (!song) {
             interaction.reply('cant play this');
             return;

@@ -3,13 +3,15 @@ import { RESTPostAPIApplicationCommandsJSONBody as DataType, Routes } from 'disc
 import { REST } from "@discordjs/rest";
 import { Client, Intents, Interaction } from 'discord.js';
 import mongo from "mongoose";
+import { Queue } from "./queue.js";
 import { config as dotenv } from 'dotenv'; dotenv();
 if (!process.env.DISCORD_TOKEN) {
     console.error('no DISCORD_TOKEN variable in the enviroment');
     process.exit();
 }
 
-const client = new Client({
+export let guildMap = new Map<string, Queue>();
+export const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MESSAGES,

@@ -1,7 +1,7 @@
-import { Command } from '../commad.js';
-import { CommandInteraction } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import ytsr, { Video } from 'ytsr';
+import { CommandInteraction } from 'discord.js';
+import { Command } from '../commad.js';
+import { ytSearch } from '../yt.js';
 
 export default {
     data: new SlashCommandBuilder()
@@ -14,13 +14,10 @@ export default {
         ).toJSON(),
     async execute(interaction: CommandInteraction, guildId: string) {
         await interaction.reply('working on it');
-        const str = interaction.options.getString('searchterm') as string;
-        const query = (await ytsr.getFilters(str)).get('Type')?.get('Video')?.url as string;
-        const searchResults = (await ytsr(query, { limit: 5 })).items;
+        const searchResults = await ytSearch(interaction.options.getString('searchterm') as string, 5)
         let reply = "top 5 results:\n";
         for (let i = 0; i < searchResults.length; i++) {
-            const e = searchResults[i] as Video;
-            reply += `${i + 1}: ${e.url}\n`;
+            reply += `${i + 1}: ${searchResults[i].url}\n`;
         }
         interaction.editReply(reply)
     }

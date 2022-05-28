@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node .",
-    "build": "tsc -b"
+    "build": "rm -rf dist && tsc -b"
   },
   "author": "Benedek",
   "license": "MIT",

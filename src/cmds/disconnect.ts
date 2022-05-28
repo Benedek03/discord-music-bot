@@ -1,7 +1,7 @@
-import { Command } from '../commad.js';
-import { CommandInteraction, GuildMember } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { Queue, queueMap } from '../queue.js';
+import { CommandInteraction, GuildMember } from 'discord.js';
+import { Command } from '../commad.js';
+import { guildMap } from '../index.js';
 
 export default {
     data: new SlashCommandBuilder()
@@ -14,17 +14,16 @@ export default {
             interaction.reply('you have to be in a voice channel to use this command!')
             return;
         }
-        if (queueMap.has(guildId) && interaction.member.voice.channelId !=queueMap.get(guildId)?.channelId) {
+        if (guildMap.has(guildId) && interaction.member.voice.channelId !=guildMap.get(guildId)?.channelId) {
             interaction.reply('you have to be in the same voice channel with me to use this command!')
             return;
         }
-        if (!queueMap.has(guildId)) {
+        if (!guildMap.has(guildId)) {
             interaction.reply('there is no queue in this guild');
             return;
         }
-        let q = queueMap.get(guildId) as Queue;
-        
-        q.leave();
+
+        guildMap.get(guildId)?.leave();
         interaction.reply('disconnected')
     }
 } as Command;

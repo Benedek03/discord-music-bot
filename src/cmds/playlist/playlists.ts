@@ -1,6 +1,6 @@
-import { Command } from '../../commad.js';
-import { CommandInteraction, MessageEmbed } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
+import { CommandInteraction, MessageEmbed } from 'discord.js';
+import { Command } from '../../commad.js';
 import { createGuild, getPlaylists } from '../../db.js';
 
 export default {

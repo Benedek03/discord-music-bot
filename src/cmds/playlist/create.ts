@@ -1,6 +1,6 @@
-import { Command } from '../../commad';
-import { CommandInteraction, } from 'discord.js';
 import { SlashCommandBuilder } from '@discordjs/builders';
+import { CommandInteraction, } from 'discord.js';
+import { Command } from '../../commad';
 import { createGuild, createPlaylist, linkPlaylist, nameExists } from '../../db.js';
 
 export default {
