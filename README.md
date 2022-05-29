@@ -1,5 +1,6 @@
-for the list of commands visit [commands.md](./commands.md)
+for the list of commands visit [commands.md](https://github.com/Benedek03/discord-music-bot/blob/main/commands.md)
 
+## Getting the image
 ### Pulling from Docker Hub
 ```
 docker pull benedek03/discord-music-bot
@@ -11,7 +12,7 @@ you can build the image like this:
 docker build . -t benedek03/discord-music-bot
 ```
 
-### Running a container
+## Running a container
 to run the container you have to create a .env file first
 ```
 DISCORD_TOKEN=
