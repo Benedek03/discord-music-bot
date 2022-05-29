@@ -31,10 +31,6 @@ export async function createGuild(guildId: string) {
 
 export async function nameExists(guildId: string, name: string): Promise<boolean> {
     return (await guildModel.findById(guildId) as (guild & { _id: string; })).playlists.some((x: any) => x.name == name)
-    // return await guildModel.exists({
-    //     _id: guildId,
-    //     playlists: { name }
-    // });
 }
 
 export async function linkPlaylist(guildId: string, playlistId: string, name: string) {

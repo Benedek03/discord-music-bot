@@ -6,7 +6,7 @@ import { createGuild, getPlayistId } from '../../db.js';
 export default {
     data: new SlashCommandBuilder()
         .setName('getid')
-        .setDescription('Gives the id of a playlist.')
+        .setDescription('gives the id of a playlist.')
         .addStringOption(o =>
             o.setName('name')
                 .setDescription('name of the playlist')

@@ -7,7 +7,7 @@ import { createGuild, getPlayistId, getSongs } from '../../db.js';
 export default {
     data: new SlashCommandBuilder()
         .setName('songs')
-        .setDescription('Lists all of the songs in the playlist.')
+        .setDescription('lists all of the songs in the playlist.')
         .addStringOption(o =>
             o.setName('name')
                 .setDescription('name of the playlist')
@@ -18,7 +18,7 @@ export default {
         let name = interaction.options.getString('name') as string;
         let id = await getPlayistId(guildId, name);
         if (!id) {
-            interaction.reply('no playlist with this name');
+            interaction.reply('> no playlist with this name');
             return;
         }
 

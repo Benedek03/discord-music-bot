@@ -1,9 +1,8 @@
-import { AudioPlayer, AudioPlayerStatus, createAudioPlayer, joinVoiceChannel, VoiceConnection } from '@discordjs/voice';
+import { AudioPlayer, AudioPlayerStatus, createAudioPlayer, joinVoiceChannel, VoiceConnection, createAudioResource } from '@discordjs/voice';
 import { StageChannel, VoiceChannel } from 'discord.js';
-import { Song } from './song.js'
-import { createAudioResource } from '@discordjs/voice';
-import ytdl from "ytdl-core";
 import { guildMap } from './index.js';
+import { Song } from './song.js'
+import ytdl from "ytdl-core";
 
 export class Queue {
     public guildId: string;

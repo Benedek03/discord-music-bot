@@ -6,7 +6,7 @@ import { createGuild, createPlaylist, linkPlaylist, nameExists } from '../../db.
 export default {
     data: new SlashCommandBuilder()
         .setName('create')
-        .setDescription('Creates a playlist with the given name.')
+        .setDescription('creates a playlist with the given name.')
         .addStringOption(o =>
             o.setName('name')
                 .setDescription('name of the playlist')

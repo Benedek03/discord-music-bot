@@ -7,11 +7,11 @@ import { guildMap } from '../index.js';
 export default {
     data: new SlashCommandBuilder()
         .setName('q')
-        .setDescription('Lists the songs in the queue.')
+        .setDescription('lists the songs in the queue.')
         .toJSON(),
     async execute(interaction: CommandInteraction, guildId: string) {
         if (!guildMap.has(guildId)) {
-            interaction.reply('there is no queue in this guild');
+            interaction.reply('> there is no queue in this guild');
             return;
         }
         let q = guildMap.get(guildId) as Queue;

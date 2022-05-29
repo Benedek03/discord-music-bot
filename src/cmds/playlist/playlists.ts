@@ -6,7 +6,7 @@ import { createGuild, getPlaylists } from '../../db.js';
 export default {
     data: new SlashCommandBuilder()
         .setName('playlists')
-        .setDescription('Lists all of the playlists in this server.')
+        .setDescription('lists all of the playlists in this server.')
         .toJSON(),
     async execute(interaction: CommandInteraction, guildId: string) {
         await createGuild(guildId)

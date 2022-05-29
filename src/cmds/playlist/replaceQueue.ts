@@ -9,7 +9,7 @@ import { getPlayistId, getSongs } from '../../db.js';
 export default {
     data: new SlashCommandBuilder()
         .setName('replacequeue')
-        .setDescription('Replaces the queue with the playlist.')
+        .setDescription('replaces the queue with the playlist.')
         .addStringOption(o =>
             o.setName('name')
                 .setDescription('name of the playlist')
@@ -18,17 +18,17 @@ export default {
     async execute(interaction: CommandInteraction, guildId: string) {
         if (!(interaction.member instanceof GuildMember)) return;
         if (!interaction.member.voice.channel) {
-            interaction.reply('you have to be in a voice channel to use this command!')
+            interaction.reply('> you have to be in a voice channel to use this command!')
             return;
         }
         if (guildMap.has(guildId) && interaction.member.voice.channelId != guildMap.get(guildId)?.channelId) {
-            interaction.reply('you have to be in the same voice channel with me to use this command!')
+            interaction.reply('> you have to be in the same voice channel with me to use this command!')
             return;
         }
         const name = interaction.options.getString('name') as string;
         const playlistId = await getPlayistId(guildId, name);
         if (!playlistId) {
-            interaction.reply('no playlist with this name ');
+            interaction.reply('> no playlist with this name ');
             return;
         }
         let songs = await getSongs(playlistId) as Song[];
@@ -43,6 +43,6 @@ export default {
         }
         q.songs.shift();
         q.play();
-        interaction.reply('done');
+        interaction.reply('> done');
     }
 } as Command;

@@ -6,14 +6,14 @@ import { getPlayistId, removeSong } from '../../db.js';
 export default {
     data: new SlashCommandBuilder()
         .setName('removesong')
-        .setDescription('Removes the nth song from the playlist.')
+        .setDescription('removes the nth song from the playlist.')
         .addStringOption(o =>
             o.setName('name')
                 .setDescription('name of the playlist')
                 .setRequired(true)
         ).addIntegerOption(o =>
             o.setName('n')
-                .setDescription('n seems kinda sussy not gonna lie')
+                .setDescription('which song do you want to remove?')
                 .setRequired(true)
         ).toJSON(),
     async execute(interaction: CommandInteraction, guildId: string) {
@@ -21,12 +21,12 @@ export default {
         let index = interaction.options.getInteger('index') as number;
         let id = await getPlayistId(guildId, name);
         if (!id) {
-            interaction.reply('no playlist with this name')
+            interaction.reply('> no playlist with this name')
             return;
         }
         if (await removeSong(id, index))
-            interaction.reply('yuppie');
+            interaction.reply('> done');
         else
-            interaction.reply('n out of bounds');
+            interaction.reply('> n out of bounds');
     }
 } as Command;

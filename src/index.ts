@@ -1,9 +1,9 @@
-import { commandDataArray, commandMap } from "./commad.js";
-import { RESTPostAPIApplicationCommandsJSONBody as DataType, Routes } from 'discord-api-types/v10';
-import { REST } from "@discordjs/rest";
 import { Client, Intents, Interaction } from 'discord.js';
-import mongo from "mongoose";
+import { REST } from "@discordjs/rest";
+import { Routes } from 'discord-api-types/v10';
+import { commandDataArray, commandMap } from "./commad.js";
 import { Queue } from "./queue.js";
+import mongo from "mongoose";
 import { config as dotenv } from 'dotenv'; dotenv();
 if (!process.env.DISCORD_TOKEN) {
     console.error('no DISCORD_TOKEN variable in the enviroment');
@@ -23,18 +23,18 @@ export const client = new Client({
 client.on('interactionCreate', async (interaction: Interaction) => {
     if (!interaction.isCommand()) return;
     if (!interaction.guildId) {
-        interaction.reply('this bot works only in servers');
+        interaction.reply('> this bot works only in servers');
         return;
     }
     try {
         if (commandMap.has(interaction.commandName)) {
             await commandMap.get(interaction.commandName)?.execute(interaction, interaction.guildId);
         } else {
-            interaction.reply('this command is not working at the moment');
+            interaction.reply('> this command is not working at the moment');
         }
     } catch (e) {
         console.error(e);
-        interaction.reply('oops there was an error');
+        interaction.reply('> oops there was an error');
     }
 })
 
@@ -46,18 +46,18 @@ client.on('ready', async () => {
     //#region deleting / commands both globally and in testguild if DELETE_COMMANDS env variable is "TRUE"
     if (process.env.DELETE_COMMANDS == "TRUE") {
         try {
-            console.log('Started deleteing application (/) commands.');
+            console.log('started deleteing / commands');
             await rest.put(
                 Routes.applicationCommands(appid),
                 { body: [] },
             );
-            console.log('Successfully deleted global application (/) commands.')
+            console.log('successfully deleted global / commands')
             if (process.env.TESTGUILDID) {
                 await rest.put(
                     Routes.applicationGuildCommands(appid, process.env.TESTGUILDID),
                     { body: [] },
                 );
-                console.log(`Successfully deleted application (/) commands. in guild: ${process.env.TESTGUILDID}`)
+                console.log(`successfully deleted / commands in guild: ${process.env.TESTGUILDID}`)
             }
             process.exit();
         } catch (error) {
@@ -77,19 +77,19 @@ client.on('ready', async () => {
 
     //#region refreshing global / commands or in a testguild if TESTGUILDID env var exist
     try {
-        console.log('Started refreshing application (/) commands.');
+        console.log('started reloading / commands');
         if (!process.env.TESTGUILDID) {
             await rest.put(
                 Routes.applicationCommands(appid),
                 { body: commandDataArray },
             );
-            console.log('Successfully reloaded global application (/) commands.');
+            console.log('successfully reloaded global / commands');
         } else {
             await rest.put(
                 Routes.applicationGuildCommands(appid, process.env.TESTGUILDID),
                 { body: commandDataArray },
             );
-            console.log(`Successfully reloaded application (/) commands. in guild: ${process.env.TESTGUILDID}`);
+            console.log(`successfully reloaded / commands in guild: ${process.env.TESTGUILDID}`);
         }
     } catch (error) {
         console.error(error);
@@ -100,9 +100,9 @@ client.on('ready', async () => {
 
     //#region connecting to database
     try {
-        console.log('connecting to the database.');
+        console.log('started connecting to db');
         await mongo.connect(process.env.MONGO_URI as string);
-        console.log('connected to the database.');
+        console.log('successfully connected to db');
     } catch (error) {
         console.error(error);
         console.log("clouldn't connect to database");
@@ -110,7 +110,7 @@ client.on('ready', async () => {
     }
     //#endregion
 
-    console.log('ready');
+    console.log('ready 🥳');
 });
 
 client.login(process.env.DISCORD_TOKEN);
