@@ -1,55 +1,23 @@
-## Common commands
-### /p <url: string>
-Plays the audio of of the YouTube video.
-
-### /q
-Lists the songs in the queue.
-
-### /d
-Stops the queue and the bot disconnects.
-
-### /s (<n: number>)
-Skips to nth song in the queue.
-
-### /rm  <n: number>
-Removes nth song in the queue.
-
-### /lq
-Toggles loopqueue.
-
-### /ls
-Toggles loopsong.
-
-### /sr <searchTerm: string> 
-Lists top 5 videos found on YouTube.
-
-## Playlist commands
-### /create <name: string>
-Creates a playlist with the given name.
-
-### /remove <name: string> 
-Removes the playlist from the server.
-
-### /add <name: string, url: string>
-Adds the song to the playlist. Only works with YouTube URLs.
-
-### /removesong <name: string, n: number>
-Removes the nth song from the playlist.
-
-### /playlists
-Lists all of the playlists in this server.
-
-### /songs <name: string>
-Lists all of the songs in the playlist.
-
-### /getid <name: string>
-Gives the id of a playlist.
-
-### /link <name: string, id: string>
-Links a playlist with the given name.
-
-### /play <name: string>
-Plays the playlist.
-
-### /replacequeue <name: string>
-Replaces the queue with the playlist.
+| command | description | argument(s) | argument description(s) |
+|---|---|---|---|
+| p | plays the audio of a YouTube video. | video | search something or give the url or id of the Youtube video. |
+| q | lists the songs in the queue. |  |  |
+| d | deletes the queue and disconnects. |  |  |
+| lq | toggles loopqueue. |  |  |
+| ls | toggles loopsong. |  |  |
+| s | skips to the nth song in the queue. default: 1. | n | which song do you want to skip to? this argument is optional. |
+| rm | removes the nth song in the queue. | n | which song do you want to remove? |
+| sr | lists top 5 search results on YouTube. | searchterm | search something! |
+| create | creates a playlist with the given name. | name | name of the playlist |
+| add | adds the song to the playlist. | name | name of the playlist |
+|  |  | video | search something or give the url or id of the Youtube video. |
+| songs | lists all of the songs in the playlist. | name | name of the playlist |
+| playlists | lists all of the playlists in this server. |  |  |
+| getid | gives the id of a playlist. | name | name of the playlist |
+| link | links a playlist with the given name. | name | name of the playlist |
+|  |  | id | what is the id of the playlist that you want to link? |
+| remove | removes the playlist from the server. | name | name of the playlist |
+| removesong | removes the nth song from the playlist. | name | name of the playlist |
+|  |  | n | which song do you want to remove? |
+| play | adds the playlist to the queue. | name | name of the playlist |
+| replacequeue | replaces the queue with the playlist. | name | name of the playlist |
