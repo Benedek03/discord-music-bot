@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction, GuildMember, } from 'discord.js';
 import { Command } from '../../commad.js';
-import { newQueue } from '../../queue.js';
+import { newQueue, shuffle } from '../../queue.js';
 import { guildMap } from '../../index.js';
 import { Song } from '../../song.js';
 import { createGuild, getPlayistId, getSongs } from '../../db.js';
@@ -14,6 +14,10 @@ export default {
             o.setName('name')
                 .setDescription('name of the playlist')
                 .setRequired(true)
+        ).addBooleanOption(o =>
+            o.setName('shuffle')
+                .setDescription('do you want the playlist to be shuffled? default: no')
+                .setRequired(false)
         ).toJSON(),
     async execute(interaction: CommandInteraction, guildId: string) {
         await createGuild(guildId)
@@ -33,6 +37,9 @@ export default {
             return;
         }
         let songs = await getSongs(playlistId) as Song[];
+
+        if (interaction.options.getBoolean('shuffle') == true)
+            shuffle(songs)
 
         if (!guildMap.has(guildId)) {
             newQueue(interaction.member.voice.channel, songs.shift() as Song)
