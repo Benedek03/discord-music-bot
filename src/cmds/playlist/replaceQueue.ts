@@ -40,7 +40,8 @@ export default {
         if (interaction.options.getBoolean('shuffle') == true)
             shuffle(songs)
 
-        if (!guildMap.has(guildId)) {
+        let noQueue = !guildMap.has(guildId)
+        if (noQueue) {
             newQueue(interaction.member.voice.channel, songs.shift() as Song)
         }
         const q = guildMap.get(guildId) as Queue;
@@ -48,7 +49,8 @@ export default {
         for (const song of songs) {
             q.addSong(song);
         }
-        q.songs.shift();
+        if (!noQueue)
+            q.songs.shift();
         q.play();
         interaction.reply('> done');
     }
