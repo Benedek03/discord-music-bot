@@ -7,7 +7,7 @@ import ytdl from "ytdl-core";
 export class Queue {
     public guildId: string;
     public channelId: string;
-    public loopQueue = false;
+    public loopQueue = true;
     public loopSong = false;
     public songs: Song[] = [];
     public connection: VoiceConnection;
