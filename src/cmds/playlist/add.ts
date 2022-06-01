@@ -20,6 +20,7 @@ export default {
                 .setRequired(true)
         ).toJSON(),
     async execute(interaction: CommandInteraction, guildId: string) {
+        interaction.reply('> working on it')
         await createGuild(guildId);
         let name = interaction.options.getString('name') as string;
         let url;
@@ -34,15 +35,15 @@ export default {
 
         let id = await getPlayistId(guildId, name);
         if (!id) {
-            interaction.reply('no playlist with this name')
+            interaction.editReply('no playlist with this name')
             return;
         }
         let song = await constructSong(url)
         if (!song) {
-            interaction.reply('cant play this');
+            interaction.editReply('cant play this');
             return;
         }
         await addSong(id, song);
-        interaction.reply(`added ${song.url} to ${name}`)
+        interaction.editReply(`added ${song.url} to ${name}`)
     }
 } as Command;
