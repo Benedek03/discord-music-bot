@@ -8,6 +8,8 @@
 | s | skips to the nth song in the queue. default: 1. | n | which song do you want to skip to? this argument is optional. |
 | rm | removes the nth song in the queue. | n | which song do you want to remove? |
 | sr | lists top 5 search results on YouTube. | searchterm | search something! |
+| shuffle | shuffles the queue | | |
+| help | provides help | | |
 | create | creates a playlist with the given name. | name | name of the playlist |
 | add | adds the song to the playlist. | name | name of the playlist |
 |  |  | video | search something or give the url or id of the Youtube video. |
@@ -20,4 +22,6 @@
 | removesong | removes the nth song from the playlist. | name | name of the playlist |
 |  |  | n | which song do you want to remove? |
 | play | adds the playlist to the queue. | name | name of the playlist |
+| | | shuffle | do you want the playlist to be shuffled? default: no |
 | replacequeue | replaces the queue with the playlist. | name | name of the playlist |
+| | | shuffle | do you want the playlist to be shuffled? default: no |

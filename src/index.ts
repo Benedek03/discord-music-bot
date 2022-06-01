@@ -42,7 +42,6 @@ client.on('ready', async () => {
     const appid = client.application?.id as string
     const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_TOKEN as string);
 
-
     //#region deleting / commands both globally and in testguild if DELETE_COMMANDS env variable is "TRUE"
     if (process.env.DELETE_COMMANDS == "TRUE") {
         try {
@@ -110,6 +109,10 @@ client.on('ready', async () => {
     }
     //#endregion
 
+    client.user?.setActivity({
+        type: 'WATCHING',
+        name: '/help'
+    });
     console.log('ready 🥳');
 });
 

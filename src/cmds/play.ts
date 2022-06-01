@@ -26,6 +26,7 @@ export default {
             interaction.reply('> you have to be in the same voice channel with me to use this command!')
             return;
         }
+        interaction.reply('> working on it')
 
         let url;
         let str = interaction.options.getString('video') as string;
@@ -39,7 +40,7 @@ export default {
 
         let song = await constructSong(url)
         if (!song) {
-            interaction.reply('> cant play this');
+            interaction.editReply('> cant play this');
             return;
         }
         if (guildMap.has(guildId)) {
@@ -47,6 +48,6 @@ export default {
         } else {
             newQueue(interaction.member.voice.channel, song)
         }
-        interaction.reply(`> added ${song.url} to queue`)
+        interaction.editReply(`> added ${song.url} to queue`)
     }
 } as Command;

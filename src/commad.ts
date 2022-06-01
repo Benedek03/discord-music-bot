@@ -17,6 +17,8 @@ for (const f of [
     './cmds/loopSong.js',
     './cmds/skip.js',
     './cmds/remove.js',
+    './cmds/shuffle.js',
+    './cmds/help.js',
 
     './cmds/playlist/create.js',
     './cmds/playlist/add.js',

@@ -22,7 +22,7 @@ export class Queue {
             selfMute: false,
             guildId: channel.guild.id,
             channelId: channel.id,
-            //@ts-ignorew
+            //@ts-ignore
             adapterCreator: channel.guild.voiceAdapterCreator
         });
         this.player = createAudioPlayer();
@@ -76,4 +76,14 @@ export async function newQueue(channel: VoiceChannel | StageChannel, song: Song)
         if (guildMap.has(channel.guildId))
             q.play();
     })
+}
+
+export function shuffle(array: Song[]) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
 }
