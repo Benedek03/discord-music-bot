@@ -9,6 +9,7 @@
 | rm | removes the nth song in the queue. | n | which song do you want to remove? |
 | sr | lists top 5 search results on YouTube. | searchterm | search something! |
 | shuffle | shuffles the queue | | |
+| help | provides help | | |
 | create | creates a playlist with the given name. | name | name of the playlist |
 | add | adds the song to the playlist. | name | name of the playlist |
 |  |  | video | search something or give the url or id of the Youtube video. |
