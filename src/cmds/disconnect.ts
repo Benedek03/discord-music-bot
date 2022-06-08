@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction, GuildMember } from 'discord.js';
-import { Command } from '../commad.js';
+import { Command } from '../command.js';
 import { guildMap } from '../index.js';
 
 export default {

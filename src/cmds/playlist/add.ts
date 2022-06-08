@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
-import { Command } from '../../commad.js';
+import { Command } from '../../command.js';
 import { constructSong } from '../../song.js';
 import { addSong, createGuild, getPlayistId } from '../../db.js';
 import { ytSearch } from '../../yt.js';
