@@ -1,7 +1,7 @@
 import { Client, Intents, Interaction } from 'discord.js';
 import { REST } from "@discordjs/rest";
 import { Routes } from 'discord-api-types/v10';
-import { commandDataArray, commandMap } from "./commad.js";
+import { commandDataArray, commandMap } from "./command.js";
 import { Queue } from "./queue.js";
 import mongo from "mongoose";
 import { config as dotenv } from 'dotenv'; dotenv();

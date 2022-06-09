@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction, GuildMember } from 'discord.js';
-import { Command } from '../commad.js';
+import { Command } from '../command.js';
 import { Queue, shuffle } from '../queue.js';
 import { guildMap } from '../index.js';
 import { Song } from '../song.js'
