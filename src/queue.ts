@@ -53,7 +53,13 @@ export class Queue {
     }
 
     async play() {
-        this.player.play(createAudioResource(await ytdl(this.songs[0].url, { highWaterMark: 1 << 25 })));
+        this.player.play(createAudioResource(
+            await ytdl(this.songs[0].url, {
+                filter: 'audioonly',
+                highWaterMark: 1 << 25,
+                dlChunkSize: 0,
+            })
+        ));
     }
 
     async addSong(s: Song) {

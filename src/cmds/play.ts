@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction, GuildMember } from 'discord.js';
 import ytdl from 'ytdl-core';
-import { Command } from '../commad.js';
+import { Command } from '../command.js';
 import { newQueue } from '../queue.js';
 import { guildMap } from '../index.js';
 import { constructSong } from '../song.js';
