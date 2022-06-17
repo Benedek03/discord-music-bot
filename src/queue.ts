@@ -1,6 +1,6 @@
 import { AudioPlayer, AudioPlayerStatus, createAudioPlayer, joinVoiceChannel, VoiceConnection, createAudioResource } from '@discordjs/voice';
 import { StageChannel, VoiceChannel } from 'discord.js';
-import { guildMap } from './index.js';
+import { client, guildMap } from './index.js';
 import { Song } from './song.js'
 import ytdl from "ytdl-core";
 
@@ -82,6 +82,19 @@ export async function newQueue(channel: VoiceChannel | StageChannel, song: Song)
         if (guildMap.has(channel.guildId))
             q.play();
     })
+    //disconnect if the voicechannel is empty 
+    //checks once a minute
+    let interval = setInterval(() => {
+        if (!guildMap.has(q.guildId)){
+            clearInterval(interval);
+            return;
+        }
+        let vc = client.channels.cache.get(q.channelId) as VoiceChannel;
+        if (vc.members.size < 2) {
+            q.leave();
+            clearInterval(interval);
+        }
+    }, 60000);
 }
 
 export function shuffle(array: Song[]) {
