@@ -45,23 +45,22 @@ client.on('ready', async () => {
     //#region deleting / commands both globally and in testguild if DELETE_COMMANDS env variable is "TRUE"
     if (process.env.DELETE_COMMANDS == "TRUE") {
         try {
-            console.log('started deleteing / commands');
             await rest.put(
                 Routes.applicationCommands(appid),
                 { body: [] },
             );
-            console.log('successfully deleted global / commands')
+            console.info('successfully deleted global / commands')
             if (process.env.TESTGUILDID) {
                 await rest.put(
                     Routes.applicationGuildCommands(appid, process.env.TESTGUILDID),
                     { body: [] },
                 );
-                console.log(`successfully deleted / commands in guild: ${process.env.TESTGUILDID}`)
+                console.info(`successfully deleted / commands in guild: ${process.env.TESTGUILDID}`)
             }
             process.exit();
         } catch (error) {
             console.error(error);
-            console.log("clouldn't delete / commands");
+            console.error("clouldn't delete / commands");
             process.exit();
         }
     }
@@ -76,35 +75,33 @@ client.on('ready', async () => {
 
     //#region refreshing global / commands or in a testguild if TESTGUILDID env var exist
     try {
-        console.log('started reloading / commands');
         if (!process.env.TESTGUILDID) {
             await rest.put(
                 Routes.applicationCommands(appid),
                 { body: commandDataArray },
             );
-            console.log('successfully reloaded global / commands');
+            console.info('global / commands reloaded');
         } else {
             await rest.put(
                 Routes.applicationGuildCommands(appid, process.env.TESTGUILDID),
                 { body: commandDataArray },
             );
-            console.log(`successfully reloaded / commands in guild: ${process.env.TESTGUILDID}`);
+            console.info(`/ commands in guild: ${process.env.TESTGUILDID} reloaded`);
         }
     } catch (error) {
         console.error(error);
-        console.log("clouldn't reload / commands");
+        console.error("clouldn't reload / commands");
         process.exit();
     }
     //#endregion
 
     //#region connecting to database
     try {
-        console.log('started connecting to db');
         await mongo.connect(process.env.MONGO_URI as string);
-        console.log('successfully connected to db');
+        console.log('database connected');
     } catch (error) {
         console.error(error);
-        console.log("clouldn't connect to database");
+        console.error("clouldn't connect to database");
         process.exit();
     }
     //#endregion
@@ -113,7 +110,7 @@ client.on('ready', async () => {
         type: 'WATCHING',
         name: '/help'
     });
-    console.log('ready 🥳');
+    console.info('ready 🥳');
 });
 
 client.login(process.env.DISCORD_TOKEN);
